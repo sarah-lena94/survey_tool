@@ -2,3 +2,50 @@ databaseChangeLog:
   - changeSet:
       id: 1
       author: slwokoeck
+      changes:
+        - createTable:
+            tableName: survey
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+              - column:
+                  name: is_template
+                  type: BOOLEAN
+  - changeSet:
+      id: 2
+      author: slwokoeck
+      changes:
+        - createTable:
+            tableName: question
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: text
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: scale
+                  type: VARCHAR(255)
+              - column:
+                  name: survey_id
+                  type: UUID
+                  constraints:
+                    foreignKey: true
+                    foreignKeyName: fk_question_survey
+                    references: survey(id)
