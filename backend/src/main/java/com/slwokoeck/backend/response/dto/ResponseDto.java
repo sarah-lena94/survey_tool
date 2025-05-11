@@ -15,9 +15,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseDto {
+
     UUID id;
+    
     @NotNull(message = "Survey ID cannot be null")
     UUID surveyId;
+    
     LocalDateTime submittedAt;
+    
     List<AnswerDto> answers;
+
 }
