@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import MainLayout from '@/components/layout/MainLayout.vue';
-import Header from '@/components/layout/Header.vue';
-import Footer from '@/components/layout/Footer.vue';
-import Card from '@/components/ui/Card.vue';
-import Input from '@/components/ui/Input.vue';
-import Label from '@/components/ui/Label.vue';
-import Textarea from '@/components/ui/Textarea.vue';
-import Button from '@/components/ui/Button.vue';
+import MainLayout from '../components/layout/MainLayout.vue';
+import Header from '../components/layout/Header.vue';
+import Footer from '../components/layout/Footer.vue';
+import Card from '../components/ui/Card.vue';
+import Input from '../components/ui/Input.vue';
+import Label from '../components/ui/Label.vue';
+import Textarea from '../components/ui/Textarea.vue';
+import Button from '../components/ui/Button.vue';
 import { Plus, Trash2 } from 'lucide-vue-next';
-import { surveyService } from '@/api/services/surveyService'; // Import Survey Service
-import type { SurveyDto } from '@/types/survey'; // Import Survey DTO
+import { surveyService } from '../api/services/surveyService';
+import type { SurveyDto } from '../types/survey';
 
 const title = ref('');
 const questions = ref([

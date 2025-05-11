@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import MainLayout from '@/components/layout/MainLayout.vue';
-import Header from '@/components/layout/Header.vue';
-import Footer from '@/components/layout/Footer.vue';
-import Card from '@/components/ui/Card.vue';
-import Button from '@/components/ui/Button.vue';
-import { surveyService } from '@/api/services/surveyService';
-import type { Survey } from '@/types/survey';
+import { surveyService } from '../api/services/surveyService';
+import Footer from '../components/layout/Footer.vue';
+import Header from '../components/layout/Header.vue';
+import MainLayout from '../components/layout/MainLayout.vue';
+import Card from '../components/ui/Card.vue';
+import type { Survey } from '../types/survey';
 
 const route = useRoute();
 const surveyId = ref(route.params.id as string);

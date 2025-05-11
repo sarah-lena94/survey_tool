@@ -1,4 +1,4 @@
-import type { Answer } from './answer';
+import type { Answer } from './answer.js';
 
 export interface Response {
   id: string

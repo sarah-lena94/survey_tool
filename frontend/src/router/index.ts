@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
+import HomeView from '../views/HomeView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,27 +12,27 @@ const router = createRouter({
     {
       path: '/create',
       name: 'create',
-      component: () => import('@/views/CreateSurveyView.vue')
+      component: () => import('../views/CreateSurveyView.vue')
     },
     {
       path: '/survey/:id',
       name: 'survey',
-      component: () => import('@/views/SurveyView.vue')
+      component: () => import('../views/SurveyView.vue')
     },
     {
       path: '/survey/:id/results',
       name: 'survey-results',
-      component: () => import('@/views/SurveyResultsView.vue')
+      component: () => import('../views/SurveyResultsView.vue')
     },
     {
       path: '/survey/:id/confirmation',
       name: 'survey-confirmation',
-      component: () => import('@/views/SurveyConfirmationView.vue')
+      component: () => import('../views/SurveyConfirmationView.vue')
     },
     {
       path: '/survey/participate',
       name: 'survey-participate',
-      component: () => import('@/views/SurveyParticipateView.vue')
+      component: () => import('../views/SurveyParticipateView.vue')
     },
     {
       path: '/about',

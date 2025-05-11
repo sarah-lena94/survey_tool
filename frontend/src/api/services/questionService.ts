@@ -1,5 +1,5 @@
-import apiClient from '../client'
-import type { Question, QuestionDto } from '@/types/question'
+import apiClient from '../client.js'
+import type { Question, QuestionDto } from 'src/types/question.ts'
 
 export const questionService = {
   async getAll(): Promise<Question[]> {

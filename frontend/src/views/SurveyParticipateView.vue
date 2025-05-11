@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import MainLayout from '@/components/layout/MainLayout.vue';
-import Header from '@/components/layout/Header.vue';
-import Footer from '@/components/layout/Footer.vue';
-import Input from '@/components/ui/Input.vue';
-import Button from '@/components/ui/Button.vue';
+import MainLayout from '../components/layout/MainLayout.vue';
+import Header from '../components/layout/Header.vue';
+import Footer from '../components/layout/Footer.vue';
+import Input from '../components/ui/Input.vue';
+import Button from '../components/ui/Button.vue';
 
 const surveyId = ref('');
 </script>

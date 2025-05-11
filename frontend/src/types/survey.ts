@@ -1,4 +1,4 @@
-import type { Question } from './question';
+import type { Question } from './question.ts';
 
 export interface Survey {
   id: string

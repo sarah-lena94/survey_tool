@@ -1,5 +1,5 @@
-import apiClient from '../client'
-import type { Survey, SurveyDto } from '@/types/survey'
+import apiClient from '../client.js'
+import type { Survey, SurveyDto } from 'src/types/survey.ts'
 
 export const surveyService = {
   async getAll(): Promise<Survey[]> {

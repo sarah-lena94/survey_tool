@@ -1,5 +1,5 @@
-import apiClient from '../client';
-import type { Response, ResponseDto } from '@/types/response';
+import apiClient from '../client.js';
+import type { Response, ResponseDto } from 'src/types/response.ts';
 import type { AxiosResponse } from 'axios';
 
 export const responseService = {
