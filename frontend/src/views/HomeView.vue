@@ -30,7 +30,7 @@ import Footer from '../components/layout/Footer.vue'
             </p>
           </div>
           <div class="flex flex-col sm:flex-row gap-4 min-[400px]:flex-row">
-            <RouterLink to="/surveys/participate">
+            <RouterLink to="/survey/participate">
               <Button
                 size="lg"
                 class="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 rounded-full shadow-md hover:shadow-lg transition-all duration-300 px-8"
