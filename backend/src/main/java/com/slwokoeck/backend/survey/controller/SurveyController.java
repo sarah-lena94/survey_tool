@@ -1,6 +1,7 @@
 package com.slwokoeck.backend.survey.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.slwokoeck.backend.survey.dto.SurveyDto;
 import com.slwokoeck.backend.survey.model.Survey;
@@ -30,11 +32,11 @@ public class SurveyController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Survey> getSurveyById(@PathVariable UUID id) {
-        Survey survey = surveyService.getSurveyById(id);
-        if (survey != null) {
+        try {
+            Survey survey = surveyService.getSurveyById(id);
             return new ResponseEntity<>(survey, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey not found", e);
         }
     }
 
@@ -56,15 +58,15 @@ public class SurveyController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Survey> updateSurvey(@PathVariable UUID id, @Valid @RequestBody SurveyDto surveyDto) {
-        Survey survey = new Survey();
-        survey.setTitle(surveyDto.getTitle());
-        survey.setCreatedAt(surveyDto.getCreatedAt());
-        survey.setTemplate(surveyDto.isTemplate());
-        Survey updatedSurvey = surveyService.updateSurvey(id, survey);
-        if (updatedSurvey != null) {
+       try {
+            Survey survey = new Survey();
+            survey.setTitle(surveyDto.getTitle());
+            survey.setCreatedAt(surveyDto.getCreatedAt());
+            survey.setTemplate(surveyDto.isTemplate());
+            Survey updatedSurvey = surveyService.updateSurvey(id, survey);
             return new ResponseEntity<>(updatedSurvey, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey not found", e);
         }
     }
 

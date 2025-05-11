@@ -1,6 +1,7 @@
 package com.slwokoeck.backend.response.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.slwokoeck.backend.response.dto.ResponseDto;
 import com.slwokoeck.backend.response.model.Response;
@@ -49,8 +51,12 @@ public class ResponseController {
         Response response = new Response();
         response.setSurveyId(responseDto.getSurveyId());
         response.setSubmittedAt(responseDto.getSubmittedAt());
-        Response createdResponse = responseService.createResponse(response);
-        return new ResponseEntity<>(createdResponse, HttpStatus.CREATED);
+        try {
+            Response createdResponse = responseService.createResponse(response);
+            return new ResponseEntity<>(createdResponse, HttpStatus.CREATED);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Response not found", e);
+        }
     }
 
     @PutMapping("/{id}")
@@ -58,11 +64,15 @@ public class ResponseController {
         Response response = new Response();
         response.setSurveyId(responseDto.getSurveyId());
         response.setSubmittedAt(responseDto.getSubmittedAt());
-        Response updatedResponse = responseService.updateResponse(id, response);
-        if (updatedResponse != null) {
-            return new ResponseEntity<>(updatedResponse, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            Response updatedResponse = responseService.updateResponse(id, response);
+            if (updatedResponse != null) {
+                return new ResponseEntity<>(updatedResponse, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Response not found", e);
         }
     }
 

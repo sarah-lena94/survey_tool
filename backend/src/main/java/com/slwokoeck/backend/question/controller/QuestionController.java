@@ -1,6 +1,7 @@
 package com.slwokoeck.backend.question.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.slwokoeck.backend.question.dto.QuestionDto;
 import com.slwokoeck.backend.question.model.Question;
@@ -52,8 +54,12 @@ public class QuestionController {
         question.setSurvey(survey);
         question.setText(questionDto.getText());
         question.setPosition(questionDto.getPosition());
+        try{
         Question createdQuestion = questionService.createQuestion(question);
         return new ResponseEntity<>(createdQuestion, HttpStatus.CREATED);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Question not found", e);
+        }
     }
 
     @PutMapping("/{id}")
@@ -64,11 +70,15 @@ public class QuestionController {
         question.setSurvey(survey);
         question.setText(questionDto.getText());
         question.setPosition(questionDto.getPosition());
+        try{
         Question updatedQuestion = questionService.updateQuestion(id, question);
         if (updatedQuestion != null) {
             return new ResponseEntity<>(updatedQuestion, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+         } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Question not found", e);
         }
     }
 

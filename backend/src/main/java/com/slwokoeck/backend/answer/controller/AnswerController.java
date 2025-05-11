@@ -1,6 +1,7 @@
 package com.slwokoeck.backend.answer.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.slwokoeck.backend.answer.dto.AnswerDto;
 import com.slwokoeck.backend.answer.model.Answer;
@@ -53,8 +55,12 @@ public class AnswerController {
         answer.setQuestionId(answerDto.getQuestionId());
         answer.setRating(answerDto.getRating());
         answer.setTextAnswer(answerDto.getTextAnswer());
-        Answer createdAnswer = answerService.createAnswer(answer);
-        return new ResponseEntity<>(createdAnswer, HttpStatus.CREATED);
+        try {
+            Answer createdAnswer = answerService.createAnswer(answer);
+            return new ResponseEntity<>(createdAnswer, HttpStatus.CREATED);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Answer not found", e);
+        }
     }
 
     @PutMapping("/{id}")
@@ -66,11 +72,15 @@ public class AnswerController {
         answer.setQuestionId(answerDto.getQuestionId());
         answer.setRating(answerDto.getRating());
         answer.setTextAnswer(answerDto.getTextAnswer());
-        Answer updatedAnswer = answerService.updateAnswer(id, answer);
-        if (updatedAnswer != null) {
-            return new ResponseEntity<>(updatedAnswer, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            Answer updatedAnswer = answerService.updateAnswer(id, answer);
+            if (updatedAnswer != null) {
+                return new ResponseEntity<>(updatedAnswer, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Answer not found", e);
         }
     }
 
