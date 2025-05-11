@@ -33,7 +33,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Override
     public Survey updateSurvey(UUID id, Survey survey) {
-        survey.setId(id);
         return surveyRepository.save(survey);
     }
 

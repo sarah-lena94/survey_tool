@@ -35,11 +35,17 @@ const removeQuestion = (index: number) => {
 
 const createSurvey = async () => {
   try {
+    // Log the title value to verify it's not empty
+    console.log('Survey title:', title.value);
+
     const surveyData: SurveyDto = {
       title: title.value,
       createdAt: new Date().toISOString(),
       isTemplate: false,
     };
+
+    // Log the complete survey data being sent
+    console.log('Survey data being sent:', surveyData);
 
     const createdSurvey = await surveyService.create(surveyData);
 
@@ -90,7 +96,7 @@ const createSurvey = async () => {
             <div class="space-y-4">
               <div class="space-y-2">
                 <Label for="title">Survey Title</Label>
-                <Input id="title" placeholder="Enter survey title" v-model="title" required class="border-teal-200 focus:border-teal-400 focus:ring-teal-400 transition-all duration-300" />
+                <Input id="title" placeholder="Enter survey title" v-model:value="title" required class="border-teal-200 focus:border-teal-400 focus:ring-teal-400 transition-all duration-300" />
               </div>
               <div class="space-y-2">
                 <Label for="description">Survey Description (Optional)</Label>

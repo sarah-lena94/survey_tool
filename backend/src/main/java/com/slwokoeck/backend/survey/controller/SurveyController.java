@@ -47,8 +47,9 @@ public class SurveyController {
     }
 
     @PostMapping
-    public ResponseEntity<Survey> createSurvey(@Valid @RequestBody SurveyDto surveyDto) {
+    public ResponseEntity<Survey> createSurvey(@RequestBody SurveyDto surveyDto) {
         Survey survey = new Survey();
+        survey.setId(UUID.randomUUID());
         survey.setTitle(surveyDto.getTitle());
         survey.setCreatedAt(surveyDto.getCreatedAt());
         survey.setTemplate(surveyDto.isTemplate());
