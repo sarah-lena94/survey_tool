@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.slwokoeck.backend.question.dto.QuestionDto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SurveyDto {
     UUID id;
+    @NotBlank(message = "Title cannot be blank")
     String title;
     LocalDateTime createdAt;
     boolean isTemplate;

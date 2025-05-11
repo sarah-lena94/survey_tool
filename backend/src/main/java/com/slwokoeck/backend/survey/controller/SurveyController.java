@@ -19,6 +19,8 @@ import com.slwokoeck.backend.survey.dto.SurveyDto;
 import com.slwokoeck.backend.survey.model.Survey;
 import com.slwokoeck.backend.survey.service.SurveyService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/surveys")
 public class SurveyController {
@@ -43,7 +45,7 @@ public class SurveyController {
     }
 
     @PostMapping
-    public ResponseEntity<Survey> createSurvey(@RequestBody SurveyDto surveyDto) {
+    public ResponseEntity<Survey> createSurvey(@Valid @RequestBody SurveyDto surveyDto) {
         Survey survey = new Survey();
         survey.setTitle(surveyDto.getTitle());
         survey.setCreatedAt(surveyDto.getCreatedAt());
@@ -53,7 +55,7 @@ public class SurveyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Survey> updateSurvey(@PathVariable UUID id, @RequestBody SurveyDto surveyDto) {
+    public ResponseEntity<Survey> updateSurvey(@PathVariable UUID id, @Valid @RequestBody SurveyDto surveyDto) {
         Survey survey = new Survey();
         survey.setTitle(surveyDto.getTitle());
         survey.setCreatedAt(surveyDto.getCreatedAt());

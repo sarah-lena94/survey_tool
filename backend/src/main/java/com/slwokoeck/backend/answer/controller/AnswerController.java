@@ -19,6 +19,8 @@ import com.slwokoeck.backend.answer.model.Answer;
 import com.slwokoeck.backend.answer.service.AnswerService;
 import com.slwokoeck.backend.response.model.Response;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/answers")
 public class AnswerController {
@@ -43,7 +45,7 @@ public class AnswerController {
     }
 
     @PostMapping
-    public ResponseEntity<Answer> createAnswer(@RequestBody AnswerDto answerDto) {
+    public ResponseEntity<Answer> createAnswer(@Valid @RequestBody AnswerDto answerDto) {
         Answer answer = new Answer();
         Response response = new Response();
         response.setId(answerDto.getResponseId());
@@ -56,7 +58,7 @@ public class AnswerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Answer> updateAnswer(@PathVariable Long id, @RequestBody AnswerDto answerDto) {
+    public ResponseEntity<Answer> updateAnswer(@PathVariable Long id, @Valid @RequestBody AnswerDto answerDto) {
         Answer answer = new Answer();
         Response response = new Response();
         response.setId(answerDto.getResponseId());

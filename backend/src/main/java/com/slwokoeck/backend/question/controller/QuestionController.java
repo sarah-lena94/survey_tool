@@ -19,6 +19,8 @@ import com.slwokoeck.backend.question.model.Question;
 import com.slwokoeck.backend.question.service.QuestionService;
 import com.slwokoeck.backend.survey.model.Survey;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/questions")
 public class QuestionController {
@@ -43,7 +45,7 @@ public class QuestionController {
     }
 
     @PostMapping
-    public ResponseEntity<Question> createQuestion(@RequestBody QuestionDto questionDto) {
+    public ResponseEntity<Question> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
         Question question = new Question();
         Survey survey = new Survey();
         survey.setId(questionDto.getSurveyId());
@@ -55,7 +57,7 @@ public class QuestionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @RequestBody QuestionDto questionDto) {
+    public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @Valid @RequestBody QuestionDto questionDto) {
         Question question = new Question();
         Survey survey = new Survey();
         survey.setId(questionDto.getSurveyId());

@@ -19,6 +19,8 @@ import com.slwokoeck.backend.response.dto.ResponseDto;
 import com.slwokoeck.backend.response.model.Response;
 import com.slwokoeck.backend.response.service.ResponseService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/responses")
 public class ResponseController {
@@ -43,7 +45,7 @@ public class ResponseController {
     }
 
     @PostMapping
-    public ResponseEntity<Response> createResponse(@RequestBody ResponseDto responseDto) {
+    public ResponseEntity<Response> createResponse(@Valid @RequestBody ResponseDto responseDto) {
         Response response = new Response();
         response.setSurveyId(responseDto.getSurveyId());
         response.setSubmittedAt(responseDto.getSubmittedAt());
@@ -52,7 +54,7 @@ public class ResponseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response> updateResponse(@PathVariable UUID id, @RequestBody ResponseDto responseDto) {
+    public ResponseEntity<Response> updateResponse(@PathVariable UUID id, @Valid @RequestBody ResponseDto responseDto) {
         Response response = new Response();
         response.setSurveyId(responseDto.getSurveyId());
         response.setSubmittedAt(responseDto.getSubmittedAt());
