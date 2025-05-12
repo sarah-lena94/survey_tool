@@ -2,6 +2,7 @@ package com.slwokoeck.backend.answer.controller;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class AnswerController {
     private AnswerService answerService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Answer> getAnswerById(@PathVariable Long id) {
+    public ResponseEntity<Answer> getAnswerById(@PathVariable UUID id) {
         Answer answer = answerService.getAnswerById(id);
         if (answer != null) {
             return new ResponseEntity<>(answer, HttpStatus.OK);
@@ -64,7 +65,7 @@ public class AnswerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Answer> updateAnswer(@PathVariable Long id, @Valid @RequestBody AnswerDto answerDto) {
+    public ResponseEntity<Answer> updateAnswer(@PathVariable UUID id, @Valid @RequestBody AnswerDto answerDto) {
         Answer answer = new Answer();
         Response response = new Response();
         response.setId(answerDto.getResponseId());
@@ -85,7 +86,7 @@ public class AnswerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAnswer(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAnswer(@PathVariable UUID id) {
         answerService.deleteAnswer(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -2,7 +2,6 @@ package com.slwokoeck.backend.question.model;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.slwokoeck.backend.survey.model.Survey;
 
 import jakarta.persistence.Entity;
@@ -20,12 +19,12 @@ import lombok.NoArgsConstructor;
 public class Question {
     @Id
     UUID id;
+
     @ManyToOne
     @JoinColumn(name = "survey_id")
-    @JsonBackReference
     Survey survey;
+
     String text;
+
     Integer position;
-    // QuestionType type;
-    // List<String> scaleLabels;
 }

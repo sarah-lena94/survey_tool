@@ -2,6 +2,7 @@ package com.slwokoeck.backend.question.dto;
 
 import java.util.UUID;
 
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -21,10 +22,5 @@ public class QuestionDto {
     @Size(max = 500, message = "Text cannot exceed 500 characters")
     String text;
     
-    Integer position;
-    
-    // QuestionType type;
-    
-    // List<String> scaleLabels;
-
+    Integer position;  
 }

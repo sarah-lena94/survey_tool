@@ -1,5 +1,7 @@
 package com.slwokoeck.backend.answer.service.impl;
 
+import java.util.UUID;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class AnswerServiceImpl implements AnswerService {
     private AnswerRepository answerRepository;
 
     @Override
-    public Answer getAnswerById(Long id) {
+    public Answer getAnswerById(UUID id) {
         return answerRepository.findById(id).orElse(null);
     }
 
@@ -31,13 +33,13 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer updateAnswer(Long id, Answer answer) {
+    public Answer updateAnswer(UUID id, Answer answer) {
         answer.setId(id);
         return answerRepository.save(answer);
     }
 
     @Override
-    public void deleteAnswer(Long id) {
+    public void deleteAnswer(UUID id) {
         answerRepository.deleteById(id);
     }
 }

@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AnswerDto {
 
-    Long id;
+    UUID id;
 
     @NotNull(message = "Response ID cannot be null")
     UUID responseId;
 
-    Long questionId;
+    UUID questionId;
 
     @Min(1) 
     @Max(6)

@@ -21,9 +21,13 @@ import lombok.NoArgsConstructor;
 public class Survey {
     @Id
     UUID id;
+
     String title;
+
     LocalDateTime createdAt;
+
     boolean isTemplate;
+    
     @OneToMany(mappedBy = "survey")
     @JsonManagedReference
     List<Question> questions;

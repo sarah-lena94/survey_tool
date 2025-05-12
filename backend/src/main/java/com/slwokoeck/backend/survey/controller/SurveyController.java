@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.slwokoeck.backend.survey.dto.SurveyDto;
+import com.slwokoeck.backend.survey.dto.SurveyResultDto;
 import com.slwokoeck.backend.survey.model.Survey;
+import com.slwokoeck.backend.survey.service.SurveyResultService;
 import com.slwokoeck.backend.survey.service.SurveyService;
 
 import jakarta.validation.Valid;
@@ -29,6 +31,19 @@ public class SurveyController {
 
     @Autowired
     private SurveyService surveyService;
+
+    @Autowired
+    private SurveyResultService surveyResultService;
+
+    @GetMapping("/{surveyId}/results")
+    public ResponseEntity<List<SurveyResultDto>> getSurveyResults(@PathVariable UUID surveyId) {
+        List<SurveyResultDto> results = surveyResultService.calculateSurveyResults(surveyId);
+        if (results != null) {
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Survey> getSurveyById(@PathVariable UUID id) {

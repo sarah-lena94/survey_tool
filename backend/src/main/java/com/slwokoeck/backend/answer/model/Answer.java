@@ -1,5 +1,7 @@
 package com.slwokoeck.backend.answer.model;
 
+import java.util.UUID;
+
 import com.slwokoeck.backend.response.model.Response;
 
 import jakarta.persistence.Entity;
@@ -16,11 +18,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Answer {
     @Id
-    Long id;
+    UUID id;
+
     @ManyToOne
     @JoinColumn(name = "response_id")
     Response response;
-    Long questionId;
+
+    UUID questionId;
+    
     Integer rating;
+
     String textAnswer;
 }

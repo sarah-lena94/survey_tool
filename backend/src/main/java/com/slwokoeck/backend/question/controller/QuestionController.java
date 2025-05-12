@@ -2,6 +2,7 @@ package com.slwokoeck.backend.question.controller;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class QuestionController {
     private SurveyService surveyService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Question> getQuestionById(@PathVariable Long id) {
+    public ResponseEntity<Question> getQuestionById(@PathVariable UUID id) {
         Question question = questionService.getQuestionById(id);
         if (question != null) {
             return new ResponseEntity<>(question, HttpStatus.OK);
@@ -69,7 +70,7 @@ public class QuestionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @Valid @RequestBody QuestionDto questionDto) {
+    public ResponseEntity<Question> updateQuestion(@PathVariable UUID id, @Valid @RequestBody QuestionDto questionDto) {
         Question question = new Question();
         Survey survey = surveyService.getSurveyById(questionDto.getSurveyId());
         if (survey == null) {
@@ -91,7 +92,7 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteQuestion(@PathVariable UUID id) {
         questionService.deleteQuestion(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

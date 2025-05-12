@@ -1,6 +1,7 @@
 package com.slwokoeck.backend.question.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionRepository questionRepository;
 
     @Override
-    public Question getQuestionById(Long id) {
+    public Question getQuestionById(UUID id) {
         return questionRepository.findById(id).orElse(null);
     }
 
@@ -31,13 +32,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question updateQuestion(Long id, Question question) {
+    public Question updateQuestion(UUID id, Question question) {
         question.setId(id);
         return questionRepository.save(question);
     }
 
     @Override
-    public void deleteQuestion(Long id) {
+    public void deleteQuestion(UUID id) {
         questionRepository.deleteById(id);
     }
 }
