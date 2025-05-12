@@ -1,6 +1,5 @@
 package com.slwokoeck.backend.question.dto;
 
-import java.util.List;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotBlank;
@@ -26,6 +25,6 @@ public class QuestionDto {
     
     // QuestionType type;
     
-    List<String> scaleLabels;
+    // List<String> scaleLabels;
 
 }

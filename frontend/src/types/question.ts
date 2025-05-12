@@ -10,5 +10,5 @@ export interface QuestionDto {
   surveyId: string
   text: string
   position: number
-  scaleLabels?: string[]
+  // scaleLabels?: string[]
 }

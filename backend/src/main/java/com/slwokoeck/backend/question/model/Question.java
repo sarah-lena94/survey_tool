@@ -1,17 +1,17 @@
 package com.slwokoeck.backend.question.model;
 
-import java.util.List;
 import java.util.UUID;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.slwokoeck.backend.survey.model.Survey;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
-import com.slwokoeck.backend.survey.model.Survey;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -19,12 +19,13 @@ import com.slwokoeck.backend.survey.model.Survey;
 @AllArgsConstructor
 public class Question {
     @Id
-    Long id;
+    UUID id;
     @ManyToOne
     @JoinColumn(name = "survey_id")
+    @JsonBackReference
     Survey survey;
     String text;
     Integer position;
     // QuestionType type;
-    List<String> scaleLabels;
+    // List<String> scaleLabels;
 }

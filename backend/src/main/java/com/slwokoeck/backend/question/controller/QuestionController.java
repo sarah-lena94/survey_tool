@@ -20,6 +20,7 @@ import com.slwokoeck.backend.question.dto.QuestionDto;
 import com.slwokoeck.backend.question.model.Question;
 import com.slwokoeck.backend.question.service.QuestionService;
 import com.slwokoeck.backend.survey.model.Survey;
+import com.slwokoeck.backend.survey.service.SurveyService;
 
 import jakarta.validation.Valid;
 
@@ -29,6 +30,9 @@ public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private SurveyService surveyService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable Long id) {
@@ -49,8 +53,10 @@ public class QuestionController {
     @PostMapping
     public ResponseEntity<Question> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
         Question question = new Question();
-        Survey survey = new Survey();
-        survey.setId(questionDto.getSurveyId());
+        Survey survey = surveyService.getSurveyById(questionDto.getSurveyId());
+        if (survey == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey not found", null);
+        }
         question.setSurvey(survey);
         question.setText(questionDto.getText());
         question.setPosition(questionDto.getPosition());
@@ -65,8 +71,10 @@ public class QuestionController {
     @PutMapping("/{id}")
     public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @Valid @RequestBody QuestionDto questionDto) {
         Question question = new Question();
-        Survey survey = new Survey();
-        survey.setId(questionDto.getSurveyId());
+        Survey survey = surveyService.getSurveyById(questionDto.getSurveyId());
+        if (survey == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey not found", null);
+        }
         question.setSurvey(survey);
         question.setText(questionDto.getText());
         question.setPosition(questionDto.getPosition());

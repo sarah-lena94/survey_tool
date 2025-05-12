@@ -4,16 +4,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.slwokoeck.backend.question.model.Question;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -26,5 +25,6 @@ public class Survey {
     LocalDateTime createdAt;
     boolean isTemplate;
     @OneToMany(mappedBy = "survey")
+    @JsonManagedReference
     List<Question> questions;
 }
