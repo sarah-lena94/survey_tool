@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { surveyService } from '../api/services/surveyService';
 
 const selectedAnswer = ref('');
@@ -17,6 +17,7 @@ const surveyId = ref(route.params.id as string);
 const survey = ref<Survey | null>(null);
 const currentQuestionIndex = ref(0);
 const currentQuestion = ref<Question | null>(null);
+const router = useRouter();
 
 onMounted(async () => {
   try {
@@ -28,6 +29,22 @@ onMounted(async () => {
     console.error('Failed to fetch survey:', error);
   }
 });
+
+const submitSurvey = async () => {
+  // TODO: Implement submit logic
+  console.log('Survey submitted!');
+  router.push(`/survey/${surveyId.value}/confirmation`);
+};
+
+const nextQuestion = () => {
+  selectedAnswer.value = '';
+  if (survey.value && survey.value.questions && currentQuestionIndex.value < survey.value.questions.length - 1) {
+    currentQuestionIndex.value++;
+    currentQuestion.value = survey.value.questions[currentQuestionIndex.value];
+  } else {
+    submitSurvey();
+  }
+};
 </script>
 
 <template>
@@ -84,7 +101,7 @@ onMounted(async () => {
         </Card>
         <div class="flex justify-between">
           <Button variant="outline">Back</Button>
-          <Button :disabled="!selectedAnswer" >{{ currentQuestionIndex + 1 === survey.questions?.length ? 'Submit' : 'Next' }}</Button>
+          <Button :disabled="!selectedAnswer" @click="nextQuestion">{{ currentQuestionIndex + 1 === survey.questions?.length ? 'Submit' : 'Next' }}</Button>
         </div>
       </div>
       <div v-else>
