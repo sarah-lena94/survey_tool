@@ -49,3 +49,55 @@ databaseChangeLog:
                     foreignKey: true
                     foreignKeyName: fk_question_survey
                     references: survey(id)
+  - changeSet:
+      id: 3
+      author: slwokoeck
+      changes:
+        - addColumn:
+            tableName: question
+            columns:
+              - column:
+                  name: position
+                  type: INT
+                  defaultValue: 0
+  - changeSet:
+      id: 4
+      author: slwokoeck
+      changes:
+        - insert:
+            tableName: survey
+            columns:
+              - column:
+                  name: id
+                  value: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+              - column:
+                  name: title
+                  value: "Example Survey"
+              - column:
+                  name: created_at
+                  valueComputed: NOW()
+              - column:
+                  name: is_template
+                  value: "false"
+  - changeSet:
+      id: 5
+      author: slwokoeck
+      changes:
+        - insert:
+            tableName: question
+            columns:
+              - column:
+                  name: id
+                  value: "b2c3d4e5-f6a7-8901-2345-67890abcdef0"
+              - column:
+                  name: text
+                  value: "What is your favorite color?"
+              - column:
+                  name: scale
+                  value: "Likert"
+              - column:
+                  name: survey_id
+                  value: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+              - column:
+                  name: position
+                  value: 1
