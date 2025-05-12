@@ -16,4 +16,9 @@ export interface SurveyDto {
   isTemplate: boolean;
 }
 
+export interface SurveyResultDto {
+  questionText: string;
+  averageAnswer: number;
+}
+
 export type { Question };

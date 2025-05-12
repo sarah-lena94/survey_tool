@@ -46,9 +46,10 @@ databaseChangeLog:
                   name: survey_id
                   type: UUID
                   constraints:
-                    foreignKey: true
+                    name: survey_id
                     foreignKeyName: fk_question_survey
                     references: survey(id)
+                    nullable: false
   - changeSet:
       id: 3
       author: slwokoeck

@@ -2,9 +2,26 @@
 import MainLayout from '../components/layout/MainLayout.vue';
 import Header from '../components/layout/Header.vue';
 import Footer from '../components/layout/Footer.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { surveyService } from '../api/services/surveyService';
+import type { SurveyResultDto } from '../types/survey.ts';
 
 const showResults = ref(false);
+const route = useRoute();
+const surveyId = ref<string | null>(null);
+const surveyResults = ref<SurveyResultDto[]>([]);
+
+onMounted(async () => {
+  surveyId.value = route.params.id as string;
+  if (surveyId.value) {
+    try {
+      surveyResults.value = await surveyService.getSurveyResults(surveyId.value);
+    } catch (error) {
+      console.error('Error fetching survey results:', error);
+    }
+  }
+});
 
 </script>
 
@@ -29,52 +46,19 @@ const showResults = ref(false);
       <div v-if="showResults" class="rounded-2xl shadow-lg p-8 bg-gray-50 mt-4 w-full">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Survey Results</h2>
         <p class="text-gray-600 mb-4">Average ratings for each question (scale: 1-5)</p>
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-gray-700">I feel comfortable sharing my ideas with the team.</span>
+        <div class="space-y-2" v-if="surveyResults.length > 0">
+          <div class="flex items-center justify-between" v-for="result in surveyResults" :key="result.questionText">
+            <span class="text-gray-700">{{ result.questionText }}</span>
             <div class="flex items-center space-x-2">
               <div class="bg-gray-300 h-2 rounded-full w-32">
-                <div class="bg-purple-600 h-2 rounded-full" style="width: 84%"></div>
+                <div class="bg-purple-600 h-2 rounded-full" :style="{ width: (result.averageAnswer / 5) * 100 + '%' }"></div>
               </div>
-              <span class="text-purple-600 font-medium">4.2</span>
+              <span class="text-purple-600 font-medium">{{ result.averageAnswer }}</span>
             </div>
           </div>
-          <div class="flex items-center justify-between">
-            <span class="text-gray-700">Team meetings are productive and well-organized.</span>
-            <div class="flex items-center space-x-2">
-              <div class="bg-gray-300 h-2 rounded-full w-32">
-                <div class="bg-purple-600 h-2 rounded-full" style="width: 74%"></div>
-              </div>
-              <span class="text-purple-600 font-medium">3.7</span>
-            </div>
-          </div>
-          <div class="flex items-center justify-between">
-            <span class="text-gray-700">I receive constructive feedback from my teammates.</span>
-            <div class="flex items-center space-x-2">
-              <div class="bg-gray-300 h-2 rounded-full w-32">
-                <div class="bg-purple-600 h-2 rounded-full" style="width: 78%"></div>
-              </div>
-              <span class="text-purple-600 font-medium">3.9</span>
-            </div>
-          </div>
-          <div class="flex items-center justify-between">
-            <span class="text-gray-700">Our team effectively resolves conflicts.</span>
-            <div class="flex items-center space-x-2">
-              <div class="bg-gray-300 h-2 rounded-full w-32">
-                <div class="bg-purple-600 h-2 rounded-full" style="width: 70%"></div>
-              </div>
-              <span class="text-purple-600 font-medium">3.5</span>
-            </div>
-          </div>
-          <div class="flex items-center justify-between">
-            <span class="text-gray-700">I have the resources I need to do my job effectively.</span>
-            <div class="flex items-center space-x-2">
-              <div class="bg-gray-300 h-2 rounded-full w-32">
-                <div class="bg-purple-600 h-2 rounded-full" style="width: 80%"></div>
-              </div>
-              <span class="text-purple-600 font-medium">4.0</span>
-            </div>
-          </div>
+        </div>
+        <div v-else>
+          <p>No results found.</p>
         </div>
       </div>
       <button class="mt-4 bg-purple-600 text-white rounded-full px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors">Return to Home</button>

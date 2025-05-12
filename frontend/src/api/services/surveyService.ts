@@ -1,5 +1,5 @@
 import apiClient from '../client.js'
-import type { Survey, SurveyDto } from 'src/types/survey.ts'
+import type { Survey, SurveyDto, SurveyResultDto } from 'src/types/survey.ts'
 
 export const surveyService = {
   async getAll(): Promise<Survey[]> {
@@ -24,5 +24,9 @@ export const surveyService = {
 
   async delete(id: string): Promise<void> {
     await apiClient.delete(`/surveys/${id}`)
+  },
+  async getSurveyResults(surveyId: string): Promise<SurveyResultDto[]> {
+    const response = await apiClient.get<SurveyResultDto[]>(`/surveys/${surveyId}/results`)
+    return response.data
   }
 }

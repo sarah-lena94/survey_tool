@@ -1,14 +1,14 @@
 export interface Answer {
-  id: number
+  id: string
   responseId: string
-  questionId: number
+  questionId: string
   rating?: number
   textAnswer?: string
 }
 
 export interface AnswerDto {
   responseId: string
-  questionId: number
+  questionId: string
   rating?: number
   textAnswer?: string
 }
