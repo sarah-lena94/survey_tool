@@ -20,6 +20,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.slwokoeck.backend.response.dto.ResponseDto;
 import com.slwokoeck.backend.response.model.Response;
 import com.slwokoeck.backend.response.service.ResponseService;
+import com.slwokoeck.backend.survey.model.Survey;
+import com.slwokoeck.backend.survey.service.SurveyService;
 
 import jakarta.validation.Valid;
 
@@ -29,6 +31,9 @@ public class ResponseController {
 
     @Autowired
     private ResponseService responseService;
+
+    @Autowired
+    private SurveyService surveyService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> getResponseById(@PathVariable UUID id) {
@@ -49,7 +54,8 @@ public class ResponseController {
     @PostMapping
     public ResponseEntity<Response> createResponse(@Valid @RequestBody ResponseDto responseDto) {
         Response response = new Response();
-        response.setSurveyId(responseDto.getSurveyId());
+        Survey survey = surveyService.getSurveyById(responseDto.getSurveyId());
+        response.setSurvey(survey);
         response.setSubmittedAt(responseDto.getSubmittedAt());
         try {
             Response createdResponse = responseService.createResponse(response);
@@ -62,7 +68,8 @@ public class ResponseController {
     @PutMapping("/{id}")
     public ResponseEntity<Response> updateResponse(@PathVariable UUID id, @Valid @RequestBody ResponseDto responseDto) {
         Response response = new Response();
-        response.setSurveyId(responseDto.getSurveyId());
+        Survey survey = surveyService.getSurveyById(responseDto.getSurveyId());
+        response.setSurvey(survey);
         response.setSubmittedAt(responseDto.getSubmittedAt());
         try {
             Response updatedResponse = responseService.updateResponse(id, response);

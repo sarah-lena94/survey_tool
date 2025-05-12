@@ -20,6 +20,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.slwokoeck.backend.answer.dto.AnswerDto;
 import com.slwokoeck.backend.answer.model.Answer;
 import com.slwokoeck.backend.answer.service.AnswerService;
+import com.slwokoeck.backend.question.model.Question;
+import com.slwokoeck.backend.question.service.QuestionService;
 import com.slwokoeck.backend.response.model.Response;
 
 import jakarta.validation.Valid;
@@ -30,6 +32,9 @@ public class AnswerController {
 
     @Autowired
     private AnswerService answerService;
+
+    @Autowired
+    private QuestionService questionService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Answer> getAnswerById(@PathVariable UUID id) {
@@ -53,7 +58,8 @@ public class AnswerController {
         Response response = new Response();
         response.setId(answerDto.getResponseId());
         answer.setResponse(response);
-        answer.setQuestionId(answerDto.getQuestionId());
+        Question question = questionService.getQuestionById(answerDto.getQuestionId());
+        answer.setQuestion(question);
         answer.setRating(answerDto.getRating());
         answer.setTextAnswer(answerDto.getTextAnswer());
         try {
@@ -70,7 +76,8 @@ public class AnswerController {
         Response response = new Response();
         response.setId(answerDto.getResponseId());
         answer.setResponse(response);
-        answer.setQuestionId(answerDto.getQuestionId());
+        Question question = questionService.getQuestionById(answerDto.getQuestionId());
+        answer.setQuestion(question);
         answer.setRating(answerDto.getRating());
         answer.setTextAnswer(answerDto.getTextAnswer());
         try {

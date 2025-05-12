@@ -26,6 +26,7 @@ public class Survey {
 
     LocalDateTime createdAt;
 
+    @lombok.Getter @lombok.Setter
     boolean isTemplate;
     
     @OneToMany(mappedBy = "survey")

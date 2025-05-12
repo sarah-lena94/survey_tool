@@ -1,6 +1,7 @@
 package com.slwokoeck.backend.answer.model;
 
 import java.util.UUID;
+import com.slwokoeck.backend.question.model.Question;
 
 import com.slwokoeck.backend.response.model.Response;
 
@@ -24,7 +25,9 @@ public class Answer {
     @JoinColumn(name = "response_id")
     Response response;
 
-    UUID questionId;
+    @ManyToOne
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
+    Question question;
     
     Integer rating;
 

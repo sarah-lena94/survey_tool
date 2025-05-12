@@ -1,6 +1,9 @@
 package com.slwokoeck.backend.response.model;
 
 import java.time.LocalDateTime;
+import com.slwokoeck.backend.survey.model.Survey;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +24,9 @@ public class Response {
     @Id
     UUID id;
 
-    UUID surveyId;
+    @ManyToOne
+    @JoinColumn(name = "survey_id", referencedColumnName = "id")
+    Survey survey;
 
     LocalDateTime submittedAt;
     

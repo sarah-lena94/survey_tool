@@ -8,9 +8,10 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: UUID
+                  type: VARCHAR(36)
                   constraints:
                     primaryKey: true
+                    nullable: false
               - column:
                   name: title
                   type: VARCHAR(255)
@@ -22,6 +23,7 @@ databaseChangeLog:
               - column:
                   name: is_template
                   type: BOOLEAN
+
   - changeSet:
       id: 2
       author: slwokoeck
@@ -31,65 +33,43 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: UUID
+                  type: VARCHAR(36)
                   constraints:
                     primaryKey: true
+                    nullable: false
               - column:
                   name: text
                   type: VARCHAR(255)
-                  constraints:
-                    nullable: false
               - column:
                   name: scale
                   type: VARCHAR(255)
               - column:
+                  name: position
+                  type: INT
+              - column:
                   name: survey_id
                   type: UUID
                   constraints:
-                    name: survey_id
+                    nullable: false
                     foreignKeyName: fk_question_survey
                     references: survey(id)
-                    nullable: false
-  - changeSet:
-      id: 3
-      author: slwokoeck
-      changes:
-        - addColumn:
-            tableName: question
-            columns:
-              - column:
-                  name: position
-                  type: INT
-                  defaultValue: 0
-  - changeSet:
-      id: 4
-      author: slwokoeck
-      changes:
+
         - insert:
             tableName: survey
             columns:
               - column:
                   name: id
-                  value: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+                  value: a1b2c3d4-e5f6-7890-1234-567890abcdef
               - column:
                   name: title
                   value: "Example Survey"
-              - column:
-                  name: created_at
-                  valueComputed: NOW()
-              - column:
-                  name: is_template
-                  value: "false"
-  - changeSet:
-      id: 5
-      author: slwokoeck
-      changes:
+
         - insert:
             tableName: question
             columns:
               - column:
                   name: id
-                  value: "b2c3d4e5-f6a7-8901-2345-67890abcdef0"
+                  value: q1q2r3r4-s5s6-7890-1234-567890abcdef
               - column:
                   name: text
                   value: "What is your favorite color?"
@@ -98,7 +78,84 @@ databaseChangeLog:
                   value: "Likert"
               - column:
                   name: survey_id
-                  value: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+                  value: a1b2c3d4-e5f6-7890-1234-567890abcdef
               - column:
                   name: position
-                  value: 1
+                  valueNumeric: 1
+
+  - changeSet:
+      id: 3
+      author: slwokoeck
+      changes:
+        - createTable:
+            tableName: response
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: survey_id
+                  type: VARCHAR(36)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_response_survey
+                    references: survey(id)
+
+        - insert:
+            tableName: response
+            columns:
+              - column:
+                  name: id
+                  value: r1r2r3r4-e5f6-7890-1234-567890abcdef
+              - column:
+                  name: survey_id
+                  value: a1b2c3d4-e5f6-7890-1234-567890abcdef
+
+        - insert:
+            tableName: response
+            columns:
+              - column:
+                  name: id
+                  value: r2r3r4r5-e5f6-7890-1234-567890abcdef
+              - column:
+                  name: survey_id
+                  value: a1b2c3d4-e5f6-7890-1234-567890abcdef
+
+  - changeSet:
+      id: 4
+      author: slwokoeck
+      changes:
+        - createTable:
+            tableName: answer
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: question_id
+                  type: VARCHAR(36)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_answer_question
+                    references: question(id)
+              - column:
+                  name: response_id
+                  type: VARCHAR(36)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_answer_response
+                    references: response(id)
+              - column:
+                  name: rating
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: textAnswer
+                  type: VARCHAR(255)
