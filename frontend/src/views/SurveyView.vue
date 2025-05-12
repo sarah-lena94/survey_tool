@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { surveyService } from '../api/services/surveyService';
+
+const selectedAnswer = ref('');
 import Footer from '../components/layout/Footer.vue';
 import Header from '../components/layout/Header.vue';
 import MainLayout from '../components/layout/MainLayout.vue';
@@ -48,38 +50,41 @@ onMounted(async () => {
         </h1>
         <p class="text-gray-600">Take a moment to share your feedback</p>
 
-        <Progress :value="20" />
-        <p>Question 1 of 5</p>
+        <div class="flex items-center justify-between">
+              <p>Question {{ currentQuestionIndex + 1 }} of {{ survey.questions ? survey.questions.length : 0 }}</p>
+              <p>{{ survey.questions && survey.questions.length === 1 ? (selectedAnswer ? 100 : 0) : (survey.questions && survey.questions.length > 0 ? Math.round((currentQuestionIndex / (survey.questions.length -1)) * 100) : 0) }}% complete</p>
+            </div>
+            <Progress :value="survey.questions && survey.questions.length === 1 ? (selectedAnswer ? 100 : 0) : (survey.questions && survey.questions.length > 0 ? (currentQuestionIndex / (survey.questions.length -1)) * 100 : 0)" />
 
         <Card v-if="currentQuestion">
-          <h2>{{ currentQuestion.text }}</h2>
+          <h2>{{currentQuestion.text}}</h2>
           <p>Select your response below</p>
           <div>
             <label>
-              <input type="radio" name="answer" value="strongly_disagree" />
+              <input type="radio" name="answer" value="strongly_disagree" v-model="selectedAnswer" />
               Strongly disagree
             </label>
             <label>
-              <input type="radio" name="answer" value="disagree" />
+              <input type="radio" name="answer" value="disagree" v-model="selectedAnswer" />
               Disagree
             </label>
             <label>
-              <input type="radio" name="answer" value="neutral" />
+              <input type="radio" name="answer" value="neutral" v-model="selectedAnswer" />
               Neutral
             </label>
             <label>
-              <input type="radio" name="answer" value="agree" />
+              <input type="radio" name="answer" value="agree" v-model="selectedAnswer" />
               Agree
             </label>
             <label>
-              <input type="radio" name="answer" value="strongly_agree" />
+              <input type="radio" name="answer" value="strongly_agree" v-model="selectedAnswer" />
               Strongly agree
             </label>
           </div>
         </Card>
         <div class="flex justify-between">
           <Button variant="outline">Back</Button>
-          <Button>Next</Button>
+          <Button :disabled="!selectedAnswer" >{{ currentQuestionIndex + 1 === survey.questions?.length ? 'Submit' : 'Next' }}</Button>
         </div>
       </div>
       <div v-else>
