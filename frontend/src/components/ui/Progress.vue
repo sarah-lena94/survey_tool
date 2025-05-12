@@ -6,26 +6,10 @@ defineProps<{
 
 <template>
   <progress
-    class="h-2 w-full appearance-none overflow-hidden rounded-full bg-secondary"
+    class="h-2 w-full appearance-none overflow-hidden rounded-full bg-gray-200"
     :value="value"
     max="100"
-  ></progress>
+  >
+    <div class="bg-teal-500 h-full rounded-full transition-all" :style="{ width: `${value}%` }"></div>
+  </progress>
 </template>
-
-<style scoped>
-progress::-webkit-progress-bar {
-  background-color: #e5e7eb;
-}
-
-progress::-webkit-progress-value {
-  background-color: #0d9488;
-}
-
-progress::-moz-progress-bar {
-  background-color: #0d9488;
-}
-
-.bg-secondary {
-    background-color: #e5e7eb;
-}
-</style>

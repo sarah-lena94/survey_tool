@@ -1,16 +1,12 @@
 <template>
-  <div class="flex items-center space-x-2">
+  <label class="flex items-center space-x-2 cursor-pointer">
     <input
       type="radio"
-      class="h-4 w-4 border-input ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      class="h-5 w-5 rounded-full border-gray-300 text-teal-500 focus:ring-teal-500"
       v-bind="$attrs"
     />
-    <slot />
-  </div>
+    <span>
+      <slot />
+    </span>
+  </label>
 </template>
-
-<style scoped>
-.border-input {
-    border-color: #d1d5db;
-}
-</style>

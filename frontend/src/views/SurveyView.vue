@@ -1,20 +1,27 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { surveyService } from '../api/services/surveyService';
 import Footer from '../components/layout/Footer.vue';
 import Header from '../components/layout/Header.vue';
 import MainLayout from '../components/layout/MainLayout.vue';
 import Card from '../components/ui/Card.vue';
-import type { Survey } from '../types/survey';
+import Button from '../components/ui/Button.vue';
+import Progress from '../components/ui/Progress.vue';
+import type { Survey, Question } from '../types/survey';
 
 const route = useRoute();
 const surveyId = ref(route.params.id as string);
 const survey = ref<Survey | null>(null);
+const currentQuestionIndex = ref(0);
+const currentQuestion = ref<Question | null>(null);
 
 onMounted(async () => {
   try {
     survey.value = await surveyService.getById(surveyId.value);
+    if (survey.value && survey.value.questions && survey.value.questions.length > 0) {
+      currentQuestion.value = survey.value.questions[currentQuestionIndex.value];
+    }
   } catch (error) {
     console.error('Failed to fetch survey:', error);
   }
@@ -41,10 +48,39 @@ onMounted(async () => {
         </h1>
         <p class="text-gray-600">Take a moment to share your feedback</p>
 
-        <Card>
-          <p>Survey ID: {{ survey.id }}</p>
-          <!-- Implement survey questions here -->
+        <Progress :value="20" />
+        <p>Question 1 of 5</p>
+
+        <Card v-if="currentQuestion">
+          <h2>{{ currentQuestion.text }}</h2>
+          <p>Select your response below</p>
+          <div>
+            <label>
+              <input type="radio" name="answer" value="strongly_disagree" />
+              Strongly disagree
+            </label>
+            <label>
+              <input type="radio" name="answer" value="disagree" />
+              Disagree
+            </label>
+            <label>
+              <input type="radio" name="answer" value="neutral" />
+              Neutral
+            </label>
+            <label>
+              <input type="radio" name="answer" value="agree" />
+              Agree
+            </label>
+            <label>
+              <input type="radio" name="answer" value="strongly_agree" />
+              Strongly agree
+            </label>
+          </div>
         </Card>
+        <div class="flex justify-between">
+          <Button variant="outline">Back</Button>
+          <Button>Next</Button>
+        </div>
       </div>
       <div v-else>
         Loading survey...
