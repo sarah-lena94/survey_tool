@@ -54,6 +54,7 @@ public class QuestionController {
     @PostMapping
     public ResponseEntity<Question> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
         Question question = new Question();
+        question.setId(UUID.randomUUID());
         Survey survey = surveyService.getSurveyById(questionDto.getSurveyId());
         if (survey == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey not found", null);

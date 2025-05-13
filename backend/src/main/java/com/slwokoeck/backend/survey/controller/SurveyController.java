@@ -74,8 +74,9 @@ public class SurveyController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Survey> updateSurvey(@PathVariable UUID id, @Valid @RequestBody SurveyDto surveyDto) {
-       try {
+        try {
             Survey survey = new Survey();
+            survey.setId(UUID.randomUUID());
             survey.setTitle(surveyDto.getTitle());
             survey.setCreatedAt(surveyDto.getCreatedAt());
             survey.setIsTemplate(surveyDto.isTemplate());

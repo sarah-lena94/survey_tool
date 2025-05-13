@@ -54,6 +54,7 @@ public class ResponseController {
     @PostMapping
     public ResponseEntity<Response> createResponse(@Valid @RequestBody ResponseDto responseDto) {
         Response response = new Response();
+        response.setId(UUID.randomUUID());
         Survey survey = surveyService.getSurveyById(responseDto.getSurveyId());
         response.setSurvey(survey);
         response.setSubmittedAt(responseDto.getSubmittedAt());

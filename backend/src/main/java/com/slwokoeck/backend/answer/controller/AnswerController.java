@@ -55,6 +55,7 @@ public class AnswerController {
     @PostMapping
     public ResponseEntity<Answer> createAnswer(@Valid @RequestBody AnswerDto answerDto) {
         Answer answer = new Answer();
+        answer.setId(UUID.randomUUID());
         Response response = new Response();
         response.setId(answerDto.getResponseId());
         answer.setResponse(response);
@@ -73,6 +74,7 @@ public class AnswerController {
     @PutMapping("/{id}")
     public ResponseEntity<Answer> updateAnswer(@PathVariable UUID id, @Valid @RequestBody AnswerDto answerDto) {
         Answer answer = new Answer();
+        answer.setId(UUID.randomUUID());
         Response response = new Response();
         response.setId(answerDto.getResponseId());
         answer.setResponse(response);
