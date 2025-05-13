@@ -131,7 +131,7 @@ const createSurvey = async () => {
             <div class="space-y-6">
               <div v-for="(question, index) in questions" :key="index" class="space-y-4 p-6 border rounded-2xl relative bg-gradient-to-r from-white to-purple-50/30 border-purple-100 hover:border-purple-200 transition-all duration-300">
                 <div class="absolute top-4 right-4">
-                  <Button type="button" variant="ghost" size="sm" @click="removeQuestion(index)" :disabled="questions.values.length <= 1" class="hover:text-red-500 transition-colors">
+                  <Button type="button" variant="ghost" size="sm" @click="removeQuestion(index)" :disabled="questions.length <= 1" class="hover:text-red-500 transition-colors">
                     <Trash2 class="h-4 w-4 text-gray-500" />
                   </Button>
                 </div>
@@ -156,7 +156,7 @@ const createSurvey = async () => {
                   </select>
                 </div>
               </div>
-              <Button type="button" variant="outline" class="w-full border-dashed border-purple-300 text-purple-600 rounded-full hover:bg-purple-50 hover:border-purple-400 transition-all duration-300" @click="addQuestion" :disabled="questions.values.length >= 10">
+              <Button type="button" variant="outline" class="w-full border-dashed border-purple-300 text-purple-600 rounded-full hover:bg-purple-50 hover:border-purple-400 transition-all duration-300" @click="addQuestion" :disabled="questions.length >= 10">
                 <Plus class="mr-2 h-4 w-4" />
                 Add Question
               </Button>
