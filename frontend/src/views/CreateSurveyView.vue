@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
 import MainLayout from '../components/layout/MainLayout.vue';
 import Header from '../components/layout/Header.vue';
 import Footer from '../components/layout/Footer.vue';
@@ -14,34 +14,50 @@ import type { SurveyDto } from '../types/survey';
 
 const title = ref('');
 const questions = ref([
-  { text: '', scale: '1-5' },
-  { text: '', scale: '1-5' },
-  { text: '', scale: '1-5' },
-  { text: '', scale: '1-5' },
-  { text: '', scale: '1-5' },
+  ref({ id: '', text: '', scale: '1-5', position: 0 }),
+  ref({ id: '', text: '', scale: '1-5', position: 1 }),
+  ref({ id: '', text: '', scale: '1-5', position: 2 }),
+  ref({ id: '', text: '', scale: '1-5', position: 3 }),
+  ref({ id: '', text: '', scale: '1-5', position: 4 }),
 ]);
 
 const addQuestion = () => {
   if (questions.value.length < 10) {
-    questions.value.push({ text: '', scale: '1-5' });
+    questions.value.push(ref({ id: '', text: '', scale: '1-5', position: questions.value.length }));
   }
 };
 
 const removeQuestion = (index: number) => {
   if (questions.value.length > 1) {
     questions.value.splice(index, 1);
+    // Update the position of the remaining questions
+    questions.value.forEach((question, i) => {
+      question.value.position = i;
+    });
   }
 };
 
 const createSurvey = async () => {
   try {
+    await nextTick();
     // Log the title value to verify it's not empty
     console.log('Survey title:', title.value);
+    console.log('Questions array:', questions.value);
 
     const surveyData: SurveyDto = {
       title: title.value,
       createdAt: new Date().toISOString(),
       isTemplate: false,
+      questions: questions.value.map((q, index) => {
+        console.log('Question text:', q.value.text);
+        return {
+          id: '',
+          surveyId: '',
+          text: q.value.text,
+          scale: q.value.scale,
+          position: index,
+        };
+      }),
     };
 
     // Log the complete survey data being sent
@@ -128,11 +144,11 @@ const createSurvey = async () => {
                       Question {{ index + 1 }}
                     </Label>
                   </div>
-                  <Textarea :id="`question-${index}`" placeholder="Enter your question" v-model="question.text" required class="border-purple-200 focus:border-purple-400 focus:ring-purple-400 transition-all duration-300" />
+                  <Textarea :id="`question-${index}`" placeholder="Enter your question" v-model="question.value.text" required class="border-purple-200 focus:border-purple-400 focus:ring-purple-400 transition-all duration-300" />
                 </div>
                 <div class="space-y-2">
                   <Label :for="`scale-${index}`">Response Scale</Label>
-                  <select :id="`scale-${index}`" v-model="question.scale" class="border-purple-200 focus:border-purple-400 focus:ring-purple-400 transition-all duration-300">
+                  <select :id="`scale-${index}`" v-model="question.value.scale" class="border-purple-200 focus:border-purple-400 focus:ring-purple-400 transition-all duration-300">
                     <option value="1-5">1-5 Scale</option>
                     <option value="1-10">1-10 Scale</option>
                     <option value="emoji">Emoji Scale</option>

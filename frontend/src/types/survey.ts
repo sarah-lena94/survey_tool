@@ -11,9 +11,10 @@ export interface Survey {
 
 export interface SurveyDto {
   title: string;
-  description: string;
+  description?: string; // Make description optional
   createdAt: string;
   isTemplate: boolean;
+  questions?: Question[]; // Add the questions property
 }
 
 export interface SurveyResultDto {

@@ -22,6 +22,9 @@ import com.slwokoeck.backend.survey.dto.SurveyResultDto;
 import com.slwokoeck.backend.survey.model.Survey;
 import com.slwokoeck.backend.survey.service.SurveyResultService;
 import com.slwokoeck.backend.survey.service.SurveyService;
+import com.slwokoeck.backend.question.dto.QuestionDto;
+import com.slwokoeck.backend.question.model.Question;
+import com.slwokoeck.backend.question.service.QuestionService;
 
 import jakarta.validation.Valid;
 
@@ -34,6 +37,9 @@ public class SurveyController {
 
     @Autowired
     private SurveyResultService surveyResultService;
+
+    @Autowired
+    private QuestionService questionService;
 
     @GetMapping("/{surveyId}/results")
     public ResponseEntity<List<SurveyResultDto>> getSurveyResults(@PathVariable UUID surveyId) {
@@ -69,6 +75,19 @@ public class SurveyController {
         survey.setCreatedAt(surveyDto.getCreatedAt());
         survey.setIsTemplate(surveyDto.isTemplate());
         Survey createdSurvey = surveyService.createSurvey(survey);
+
+        // Create questions for the survey
+        if (surveyDto.getQuestions() != null) {
+            for (QuestionDto questionDto : surveyDto.getQuestions()) {
+                Question question = new Question();
+                question.setId(UUID.randomUUID());
+                question.setSurvey(createdSurvey);
+                question.setText(questionDto.getText());
+                question.setPosition(questionDto.getPosition());
+                questionService.createQuestion(question);
+            }
+        }
+
         return new ResponseEntity<>(createdSurvey, HttpStatus.CREATED);
     }
 
