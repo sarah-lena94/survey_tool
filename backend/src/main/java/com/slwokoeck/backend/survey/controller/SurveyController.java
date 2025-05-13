@@ -67,7 +67,7 @@ public class SurveyController {
         survey.setId(UUID.randomUUID());
         survey.setTitle(surveyDto.getTitle());
         survey.setCreatedAt(surveyDto.getCreatedAt());
-        survey.setTemplate(surveyDto.isTemplate());
+        survey.setIsTemplate(surveyDto.isTemplate());
         Survey createdSurvey = surveyService.createSurvey(survey);
         return new ResponseEntity<>(createdSurvey, HttpStatus.CREATED);
     }
@@ -78,7 +78,7 @@ public class SurveyController {
             Survey survey = new Survey();
             survey.setTitle(surveyDto.getTitle());
             survey.setCreatedAt(surveyDto.getCreatedAt());
-            survey.setTemplate(surveyDto.isTemplate());
+            survey.setIsTemplate(surveyDto.isTemplate());
             Survey updatedSurvey = surveyService.updateSurvey(id, survey);
             return new ResponseEntity<>(updatedSurvey, HttpStatus.OK);
         } catch (NoSuchElementException e) {
