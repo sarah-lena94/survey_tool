@@ -34,6 +34,11 @@ const router = createRouter({
       name: 'survey-participate',
       component: () => import('../views/SurveyParticipateView.vue')
     },
+{
+      path: '/survey/:id/success',
+      name: 'survey-creation-success',
+      component: () => import('../views/SurveyCreationSuccessView.vue')
+    },
     {
       path: '/about',
       name: 'about',
@@ -42,7 +47,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
     }
-  ]
+  ],
 });
 
 export default router;

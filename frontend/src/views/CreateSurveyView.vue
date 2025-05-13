@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 import { ref, nextTick } from 'vue';
 import MainLayout from '../components/layout/MainLayout.vue';
 import Header from '../components/layout/Header.vue';
@@ -69,8 +72,11 @@ const createSurvey = async () => {
     // Angenommen, die Fragen werden separat über eine andere API hinzugefügt
     console.log('Survey created successfully:', createdSurvey);
 
-    // Nach erfolgreichem Senden der Daten
-    alert('Survey created successfully!');
+    // Redirect to the success page instead of showing an alert
+    router.push({
+      name: 'survey-creation-success',
+      params: { id: createdSurvey.id }
+    });
   } catch (error) {
     console.error('Error creating survey:', error);
     alert('Failed to create survey.');
