@@ -108,7 +108,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  value: r1r2r3r4-e5f6-7890-1234-567890abcdef
+                  value: 1d2db6e0-b9b4-477f-ae41-0b87ddc33b6d
               - column:
                   name: survey_id
                   value: a1b2c3d4-e5f6-7890-1234-567890abcdef
@@ -118,7 +118,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  value: r2r3r4r5-e5f6-7890-1234-567890abcdef
+                  value: f86964f9-952d-4d98-8827-bdc5c362fb24
               - column:
                   name: survey_id
                   value: a1b2c3d4-e5f6-7890-1234-567890abcdef
@@ -157,4 +157,24 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: textAnswer
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 5
+      author: slwokoeck
+      changes:
+        - addColumn:
+            tableName: response
+            columns:
+              - column:
+                  name: submitted_at
+                  type: TIMESTAMP
+  - changeSet:
+      id: 6
+      author: slwokoeck
+      changes:
+        - addColumn:
+            tableName: answer
+            columns:
+              - column:
+                  name: text_answer
                   type: VARCHAR(255)
