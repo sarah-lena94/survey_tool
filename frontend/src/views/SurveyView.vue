@@ -2,8 +2,13 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { surveyService } from '../api/services/surveyService';
+import { responseService } from '../api/services/responseService';
+import { answerService } from '../api/services/answerService';
+import type { AnswerDto } from '../types/answer';
+import type { ResponseDto } from '../types/response';
 
 const selectedAnswer = ref('');
+const answers = ref<Map<string, string>>(new Map());
 import Footer from '../components/layout/Footer.vue';
 import Header from '../components/layout/Header.vue';
 import MainLayout from '../components/layout/MainLayout.vue';
@@ -31,16 +36,69 @@ onMounted(async () => {
 });
 
 const submitSurvey = async () => {
-  // TODO: Implement submit logic
-  console.log('Survey submitted!');
-  router.push(`/survey/${surveyId.value}/confirmation`);
+  try {
+    // Save the last answer
+    if (currentQuestion.value && selectedAnswer.value) {
+      answers.value.set(currentQuestion.value.id, selectedAnswer.value);
+    }
+
+    // Create a response
+    const responseDto: ResponseDto = {
+      surveyId: surveyId.value,
+      submittedAt: new Date().toISOString()
+    };
+
+    const response = await responseService.create(responseDto);
+    console.log('Response created:', response);
+
+    // Create answers for each question
+    const savePromises = Array.from(answers.value.entries()).map(async ([questionId, answer]) => {
+      const answerDto: AnswerDto = {
+        responseId: response.id,
+        questionId: questionId,
+        rating: getNumericRating(answer),
+        textAnswer: answer
+      };
+
+      return answerService.create(answerDto);
+    });
+
+    await Promise.all(savePromises);
+    console.log('All answers saved successfully!');
+
+    router.push(`/survey/${surveyId.value}/confirmation`);
+  } catch (error) {
+    console.error('Failed to submit survey:', error);
+    alert('Failed to submit survey. Please try again.');
+  }
+};
+
+const getNumericRating = (answer: string): number => {
+  switch (answer) {
+    case 'strongly_disagree': return 1;
+    case 'disagree': return 2;
+    case 'neutral': return 3;
+    case 'agree': return 4;
+    case 'strongly_agree': return 5;
+    default: return 3; // Default to neutral
+  }
 };
 
 const nextQuestion = () => {
+  // Save the current answer before moving to the next question
+  if (currentQuestion.value && selectedAnswer.value) {
+    answers.value.set(currentQuestion.value.id, selectedAnswer.value);
+  }
+
   selectedAnswer.value = '';
   if (survey.value && survey.value.questions && currentQuestionIndex.value < survey.value.questions.length - 1) {
     currentQuestionIndex.value++;
     currentQuestion.value = survey.value.questions[currentQuestionIndex.value];
+
+    // If we already have an answer for this question, restore it
+    if (currentQuestion.value && answers.value.has(currentQuestion.value.id)) {
+      selectedAnswer.value = answers.value.get(currentQuestion.value.id) || '';
+    }
   } else {
     submitSurvey();
   }
