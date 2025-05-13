@@ -120,10 +120,6 @@ const createSurvey = async () => {
                 <Label for="title">Survey Title</Label>
                 <Input id="title" placeholder="Enter survey title" v-model:value="title" required class="border-teal-200 focus:border-teal-400 focus:ring-teal-400 transition-all duration-300" />
               </div>
-              <div class="space-y-2">
-                <Label for="description">Survey Description (Optional)</Label>
-                <Textarea id="description" placeholder="Enter a brief description of your survey" class="min-h-[100px] border-teal-200 focus:border-teal-400 focus:ring-teal-400 transition-all duration-300"></Textarea>
-              </div>
             </div>
           </div>
         </Card>
