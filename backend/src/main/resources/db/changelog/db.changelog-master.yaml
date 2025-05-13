@@ -63,13 +63,12 @@ databaseChangeLog:
               - column:
                   name: title
                   value: "Example Survey"
-
         - insert:
             tableName: question
             columns:
               - column:
                   name: id
-                  value: q1q2r3r4-s5s6-7890-1234-567890abcdef
+                  value: 66b0022f-c2c6-4f23-9047-43ae92e0b4a6
               - column:
                   name: text
                   value: "What is your favorite color?"

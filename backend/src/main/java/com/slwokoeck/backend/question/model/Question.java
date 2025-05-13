@@ -2,6 +2,7 @@ package com.slwokoeck.backend.question.model;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.slwokoeck.backend.survey.model.Survey;
 
 import jakarta.persistence.Entity;
@@ -22,6 +23,7 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "survey_id")
+    @JsonBackReference
     Survey survey;
 
     String text;
