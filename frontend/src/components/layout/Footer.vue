@@ -27,7 +27,7 @@
         </span>
       </div>
       <div class="text-center md:text-left text-sm text-gray-500">
-        © {new Date().getFullYear()} Teammeter. All rights reserved.
+        © {{ new Date().getFullYear() }} Teammeter. All rights reserved.
       </div>
       <div class="flex justify-center md:justify-end gap-6">
         <a href="#" class="text-sm text-gray-500 hover:text-teal-600 transition-colors">
