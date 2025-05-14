@@ -34,7 +34,6 @@ import Button from '../ui/Button.vue'
         <div class="hidden md:flex items-center space-x-8">
           <RouterLink to="/" class="text-sm font-medium hover:text-teal-600 transition-colors">Home</RouterLink>
           <RouterLink to="/create" class="text-sm font-medium hover:text-teal-600 transition-colors">Create Survey</RouterLink>
-          <RouterLink to="" class="text-sm font-medium hover:text-teal-600 transition-colors">About</RouterLink>
         </div>
 
         <div class="flex items-center gap-4">
