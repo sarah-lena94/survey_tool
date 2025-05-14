@@ -5,6 +5,8 @@ import { surveyService } from '../api/services/surveyService';
 import MainLayout from '../components/layout/MainLayout.vue';
 import Button from '../components/ui/Button.vue';
 import Input from '../components/ui/Input.vue';
+import Footer from '../components/layout/Footer.vue';
+import Header from '../components/layout/Header.vue';
 
 const surveyCode = ref('');
 const router = useRouter();
