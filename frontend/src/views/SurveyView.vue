@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { surveyService } from '../api/services/surveyService';
-import { responseService } from '../api/services/responseService';
 import { answerService } from '../api/services/answerService';
-import type { AnswerDto } from '../types/answer';
-import type { ResponseDto } from '../types/response';
-
-const selectedAnswer = ref('');
-const answers = ref<Map<string, string>>(new Map());
+import { responseService } from '../api/services/responseService';
+import { surveyService } from '../api/services/surveyService';
 import Footer from '../components/layout/Footer.vue';
 import Header from '../components/layout/Header.vue';
 import MainLayout from '../components/layout/MainLayout.vue';
-import Card from '../components/ui/Card.vue';
 import Button from '../components/ui/Button.vue';
 import Progress from '../components/ui/Progress.vue';
-import type { Survey, Question } from '../types/survey';
+import type { AnswerDto } from '../types/answer';
+import type { ResponseDto } from '../types/response';
+import type { Question, Survey } from '../types/survey';
+import Card from '../components/ui/Card.vue';
+
+const selectedAnswer = ref('');
+const answers = ref<Map<string, string>>(new Map());
 
 const route = useRoute();
 const surveyId = ref(route.params.id as string);
@@ -124,13 +124,6 @@ const prevQuestion = () => {
 </script>
 
 <style>
-  .card {
-    padding: 0;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    overflow: hidden;
-  }
-
   input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;
@@ -198,7 +191,7 @@ input[type="radio"]:checked {
         <Progress
           :value="(100 / (survey.questions?.length || 1)) * currentQuestionIndex" />
 
-        <div class="card" v-if="currentQuestion">
+        <Card v-if="currentQuestion">
           <div class="flex flex-col bg-teal-50 p-6">
             <h2 class="text-xl font-bold">{{ currentQuestion.text }}</h2>
             <p class="opacity-70 text-md mt-2">Select your response below</p>
@@ -225,7 +218,7 @@ input[type="radio"]:checked {
               Strongly agree
             </label>
           </div>
-        </div>
+        </Card>
         <div class="flex justify-between">
           <Button :disabled="currentQuestionIndex === 0" variant="outline" @click="prevQuestion">Back</Button>
           <Button :disabled="!selectedAnswer" @click="nextQuestion">{{ currentQuestionIndex + 1 ===

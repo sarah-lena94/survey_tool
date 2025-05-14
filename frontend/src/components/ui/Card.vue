@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-2xl shadow-md p-6" data-v0-t="card">
+  <div class="rounded-2xl shadow-md" data-v0-t="card">
     <slot />
   </div>
 </template>

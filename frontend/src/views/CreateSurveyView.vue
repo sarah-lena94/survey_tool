@@ -110,11 +110,11 @@ const createSurvey = async () => {
 
       <form @submit.prevent="createSurvey">
         <Card class="mb-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border-teal-100">
-          <div class="bg-gradient-to-r from-teal-50 to-teal-100/30 rounded-t-2xl p-4">
+          <div class="bg-gradient-to-r from-teal-50 to-teal-100/30 rounded-t-2xl p-6">
             <h2 class="text-teal-800 font-bold">Survey Details</h2>
             <p class="text-gray-600">Enter the title and description for your survey</p>
           </div>
-          <div class="py-6">
+          <div class="p-6">
             <div class="space-y-4">
               <div class="space-y-2">
                 <Label for="title">Survey Title</Label>
@@ -125,11 +125,11 @@ const createSurvey = async () => {
         </Card>
 
         <Card class="mb-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border-purple-100">
-          <div class="bg-gradient-to-r from-purple-50 to-purple-100/30 rounded-t-2xl p-4">
+          <div class="bg-gradient-to-r from-purple-50 to-purple-100/30 rounded-t-2xl p-6">
             <h2 class="text-purple-800 font-bold">Survey Questions</h2>
             <p class="text-gray-600">Add up to 10 questions for your survey</p>
           </div>
-          <div class="py-6">
+          <div class="p-6">
             <div class="space-y-6">
               <div v-for="(question, index) in questions" :key="index" class="space-y-4 p-6 border rounded-2xl relative bg-gradient-to-r from-white to-purple-50/30 border-purple-100 hover:border-purple-200 transition-all duration-300">
                 <div class="absolute top-4 right-4">
