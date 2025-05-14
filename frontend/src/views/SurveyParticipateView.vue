@@ -113,7 +113,7 @@ const startSurvey = () => {
                               <circle cx="12" cy="14" r="1" fill="currentColor" />
                               <circle cx="16" cy="14" r="1" fill="currentColor" />
                             </svg>
-                            <span>{{ new Date(survey1.createdAt || '').toLocaleDateString() }}</span>
+                            <span>{{ survey1.createdAt || '13.05.2025' }}</span>
                           </div>
                         </div>
                       </div>
@@ -141,7 +141,7 @@ const startSurvey = () => {
                               <circle cx="12" cy="14" r="1" fill="currentColor" />
                               <circle cx="16" cy="14" r="1" fill="currentColor" />
                             </svg>
-                            <span>{{ new Date(survey2.createdAt || '').toLocaleDateString() }}</span>
+                            <span>{{ survey2.createdAt || '10.05.2025' }}</span>
                           </div>
                         </div>
                       </div>
@@ -169,7 +169,7 @@ const startSurvey = () => {
                               <circle cx="12" cy="14" r="1" fill="currentColor" />
                               <circle cx="16" cy="14" r="1" fill="currentColor" />
                             </svg>
-                            <span>{{ new Date(survey3.createdAt || '').toLocaleDateString() }}</span>
+                            <span>{{ survey3.createdAt || '11.05.2025' }}</span>
                           </div>
                         </div>
                       </div>
