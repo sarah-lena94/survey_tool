@@ -2,7 +2,7 @@
   <div class="rounded-2xl shadow-lg p-8 bg-gray-50 mt-4 w-full">
     <h2 class="text-xl font-semibold text-gray-800 mb-4">Survey Results: {{ surveyTitle }}</h2>
     <div class="space-y-2" v-if="surveyResults.length > 0">
-      <p class="text-gray-600 mt-4">{{ numberOfParticipants }} responses</p>
+      <p class="text-gray-600 mt-4">{{ numberOfParticipants }} {{ numberOfParticipants < 2 ? 'response' : 'responses'}}</p>
       <p class="text-gray-600 mb-4">Average ratings for each question (scale: 1-5)</p>
       <div class="flex items-center justify-between" v-for="result in surveyResults" :key="result.questionText">
         <span class="text-gray-700">{{ result.questionText }}</span>
