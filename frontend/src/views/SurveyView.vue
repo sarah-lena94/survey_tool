@@ -180,7 +180,9 @@ input[type="radio"]:checked {
       </div>
 
       <div v-if="survey" class="space-y-4">
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center"><div class="inline-block bg-gradient-to-r from-teal-100 to-purple-100 px-4 py-1 rounded-full text-teal-700 font-medium text-sm mb-2">
+              Team Feedback
+            </div>
           <h1
             class="text-3xl font-bold tracking-tighter bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
             {{ survey.title }}

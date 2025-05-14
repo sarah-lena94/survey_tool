@@ -4,7 +4,7 @@ import Button from '../ui/Button.vue'
 </script>
 
 <template>
-  <header class="border-b bg-white w-full flex justify-center">
+  <header class="bg-white w-full flex justify-center">
     <div class="flex justify-center w-full">
       <div class="container flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <div class="flex items-center gap-2">
@@ -39,7 +39,7 @@ import Button from '../ui/Button.vue'
 
         <div class="flex items-center gap-4">
           <RouterLink to="/get-started">
-            <Button size="sm" class="bg-teal-500 hover:bg-teal-600 text-white rounded-md px-4 py-1.5">Get Started</Button>
+            <Button size="sm" class="bg-teal-500 hover:bg-teal-600 text-white rounded-full px-4 py-1.5">Get Started</Button>
           </RouterLink>
         </div>
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <footer class="border-t bg-white flex justify-center">
+  <footer class="bg-white flex justify-center">
     <div class="flex justify-center w-full">
       <div class="container flex flex-col gap-4 py-8 md:flex-row md:items-center md:justify-between md:py-6 px-4 sm:px-6 lg:px-8">
         <div class="flex items-center gap-2">

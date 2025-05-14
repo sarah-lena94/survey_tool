@@ -38,9 +38,9 @@ const startSurvey = () => {
 
         <div class="flex justify-center items-center flex-col w-full">
           <div class="text-center mb-8">
-            <span
-              class="inline-block bg-teal-50 text-teal-600 rounded-full px-4 py-1 text-sm font-semibold mb-3 survey-badge">Join
-              Survey</span>
+            <div class="inline-block bg-gradient-to-r from-teal-100 to-purple-100 px-4 py-1 rounded-full text-teal-700 font-medium text-sm mb-2">
+              Join Survey
+            </div>
             <h1 class="text-3xl font-bold text-gray-800 mb-2" style="color: #4338ca;">Participate in a Survey</h1>
             <p class="text-gray-600 text-lg">Enter a survey code or select from available surveys</p>
           </div>
