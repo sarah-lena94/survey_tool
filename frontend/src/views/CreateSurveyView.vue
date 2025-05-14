@@ -190,7 +190,7 @@ const createSurvey = async () => {
                         </span>
                       </ListboxButton>
                       <ListboxOptions
-                        class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-gray-200">
+                        class="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-md outline-1 outline-purple-200 focus:outline-none border border-gray-200">
                         <ListboxOption v-for="option in options" :key="option.value" :value="option.value"
                           :disabled="option.disabled" class="relative cursor-default select-none py-2 pl-10 pr-4"
                           :class="{
