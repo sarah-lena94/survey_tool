@@ -111,7 +111,7 @@ const prevQuestion = () => {
   }
 
 
-    if (survey.value && survey.value.questions && currentQuestionIndex.value > 0) {
+  if (survey.value && survey.value.questions && currentQuestionIndex.value > 0) {
     currentQuestionIndex.value -= 1;
     currentQuestion.value = survey.value.questions[currentQuestionIndex.value];
 
@@ -124,33 +124,10 @@ const prevQuestion = () => {
 </script>
 
 <style>
-  input[type="radio"] {
-  appearance: none;
-  -webkit-appearance: none;
+input[type="radio"] {
   width: 18px;
   height: 18px;
-  border: 2px solid hsla(160, 100%, 37%, 1);
-  border-radius: 50%;
-  outline: none;
   cursor: pointer;
-  transition: border-color 0.2s ease;
-}
-
-/* Hover state */
-input[type="radio"]:hover {
-  border-color: hsla(160, 100%, 37%, 1);
-}
-
-/* Focus state for accessibility */
-input[type="radio"]:focus {
-  box-shadow: 0 0 0 2px rgba(#0f766e, 0.3);
-}
-
-/* Selected state - creates the filled circle */
-input[type="radio"]:checked {
-  border-color: hsla(160, 100%, 37%, 1);
-  background-color: hsla(160, 100%, 37%, 1);
-  box-shadow: inset 0 0 0 3px white;
 }
 </style>
 
@@ -173,9 +150,11 @@ input[type="radio"]:checked {
       </div>
 
       <div v-if="survey" class="space-y-4">
-        <div class="flex flex-col items-center"><div class="inline-block bg-gradient-to-r from-teal-100 to-purple-100 px-4 py-1 rounded-full text-teal-700 font-medium text-sm mb-2">
-              Team Feedback
-            </div>
+        <div class="flex flex-col items-center">
+          <div
+            class="inline-block bg-gradient-to-r from-teal-100 to-purple-100 px-4 py-1 rounded-full text-teal-700 font-medium text-sm mb-2">
+            Team Feedback
+          </div>
           <h1
             class="text-3xl font-bold tracking-tighter bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
             {{ survey.title }}
@@ -188,8 +167,7 @@ input[type="radio"]:checked {
           <p>{{ (100 / (survey.questions?.length || 1)) * currentQuestionIndex }}%
             complete</p>
         </div>
-        <Progress
-          :value="(100 / (survey.questions?.length || 1)) * currentQuestionIndex" />
+        <Progress :value="(100 / (survey.questions?.length || 1)) * currentQuestionIndex" />
 
         <Card v-if="currentQuestion">
           <div class="flex flex-col bg-teal-50 p-6">
@@ -198,23 +176,25 @@ input[type="radio"]:checked {
           </div>
           <div class="flex flex-col gap-7 font-semibold p-6">
             <label class="flex gap-5 items-center">
-              <input type="radio" name="answer" value="strongly_disagree" v-model="selectedAnswer" />
+              <input class="accent-teal-600" type="radio" name="answer" value="strongly_disagree"
+                v-model="selectedAnswer" />
               Strongly disagree
             </label>
             <label class="flex gap-5 items-center">
-              <input type="radio" name="answer" value="disagree" v-model="selectedAnswer" />
+              <input class="accent-teal-600" type="radio" name="answer" value="disagree" v-model="selectedAnswer" />
               Disagree
             </label>
             <label class="flex gap-5 items-center">
-              <input type="radio" name="answer" value="neutral" v-model="selectedAnswer" />
+              <input class="accent-teal-600" type="radio" name="answer" value="neutral" v-model="selectedAnswer" />
               Neutral
             </label>
             <label class="flex gap-5 items-center">
-              <input type="radio" name="answer" value="agree" v-model="selectedAnswer" />
+              <input class="accent-teal-600" type="radio" name="answer" value="agree" v-model="selectedAnswer" />
               Agree
             </label>
             <label class="flex gap-5 items-center">
-              <input type="radio" name="answer" value="strongly_agree" v-model="selectedAnswer" />
+              <input class="accent-teal-600" type="radio" name="answer" value="strongly_agree"
+                v-model="selectedAnswer" />
               Strongly agree
             </label>
           </div>
