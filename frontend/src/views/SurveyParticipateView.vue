@@ -21,6 +21,10 @@ const startSurvey = () => {
 
 <template>
   <MainLayout>
+    <template #header>
+      <Header />
+    </template>
+
     <div class="container flex justify-center items-center flex-col m-auto px-4 py-8">
       <div class="container max-w-4xl">
         <RouterLink to="/" class="text-teal-500 hover:text-teal-700 flex items-center mb-4">
@@ -171,8 +175,8 @@ const startSurvey = () => {
       </div>
     </div>
 
-    <!-- <template #footer>
+    <template #footer>
       <Footer />
-    </template> -->
+    </template>
   </MainLayout>
 </template>

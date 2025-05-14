@@ -103,7 +103,63 @@ const nextQuestion = () => {
     submitSurvey();
   }
 };
+
+const prevQuestion = () => {
+  // Save the current answer before moving to the next question
+  if (currentQuestion.value && selectedAnswer.value) {
+    answers.value.set(currentQuestion.value.id, selectedAnswer.value);
+  }
+
+
+    if (survey.value && survey.value.questions && currentQuestionIndex.value > 0) {
+    currentQuestionIndex.value -= 1;
+    currentQuestion.value = survey.value.questions[currentQuestionIndex.value];
+
+    // If we already have an answer for this question, restore it
+    if (currentQuestion.value && answers.value.has(currentQuestion.value.id)) {
+      selectedAnswer.value = answers.value.get(currentQuestion.value.id) || '';
+    }
+  }
+};
 </script>
+
+<style>
+  .card {
+    padding: 0;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+
+  input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid hsla(160, 100%, 37%, 1);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+/* Hover state */
+input[type="radio"]:hover {
+  border-color: hsla(160, 100%, 37%, 1);
+}
+
+/* Focus state for accessibility */
+input[type="radio"]:focus {
+  box-shadow: 0 0 0 2px rgba(#0f766e, 0.3);
+}
+
+/* Selected state - creates the filled circle */
+input[type="radio"]:checked {
+  border-color: hsla(160, 100%, 37%, 1);
+  background-color: hsla(160, 100%, 37%, 1);
+  box-shadow: inset 0 0 0 3px white;
+}
+</style>
 
 <template>
   <MainLayout>
@@ -114,52 +170,65 @@ const nextQuestion = () => {
     <div class="container mx-auto px-4 py-8 max-w-3xl">
       <div class="mb-8">
         <a href="/" class="text-teal-600 hover:text-purple-600 transition-colors flex items-center gap-1">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+          </svg>
           Back to Home
         </a>
       </div>
 
       <div v-if="survey" class="space-y-4">
-        <h1 class="text-3xl font-bold tracking-tighter bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-          {{ survey.title }}
-        </h1>
-        <p class="text-gray-600">Take a moment to share your feedback</p>
+        <div class="flex flex-col items-center">
+          <h1
+            class="text-3xl font-bold tracking-tighter bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
+            {{ survey.title }}
+          </h1>
+          <p class="text-gray-600">Take a moment to share your feedback</p>
+        </div>
 
         <div class="flex items-center justify-between">
-              <p>Question {{ currentQuestionIndex + 1 }} of {{ survey.questions ? survey.questions.length : 0 }}</p>
-              <p>{{ survey.questions && survey.questions.length === 1 ? (selectedAnswer ? 100 : 0) : (survey.questions && survey.questions.length > 0 ? Math.round((currentQuestionIndex / (survey.questions.length -1)) * 100) : 0) }}% complete</p>
-            </div>
-            <Progress :value="survey.questions && survey.questions.length === 1 ? (selectedAnswer ? 100 : 0) : (survey.questions && survey.questions.length > 0 ? (currentQuestionIndex / (survey.questions.length -1)) * 100 : 0)" />
+          <p>Question {{ currentQuestionIndex + 1 }} of {{ survey.questions ? survey.questions.length : 0 }}</p>
+          <p>{{ (100 / (survey.questions?.length || 1)) * currentQuestionIndex }}%
+            complete</p>
+        </div>
+        <Progress
+          :value="(100 / (survey.questions?.length || 1)) * currentQuestionIndex" />
 
-        <Card v-if="currentQuestion">
-          <h2>{{currentQuestion.text}}</h2>
-          <p>Select your response below</p>
-          <div>
-            <label>
+        <div class="card" v-if="currentQuestion">
+          <div class="flex flex-col bg-teal-50 p-6">
+            <h2 class="text-xl font-bold">{{ currentQuestion.text }}</h2>
+            <p class="opacity-70 text-md mt-2">Select your response below</p>
+          </div>
+          <div class="flex flex-col gap-7 font-semibold p-6">
+            <label class="flex gap-5 items-center">
               <input type="radio" name="answer" value="strongly_disagree" v-model="selectedAnswer" />
               Strongly disagree
             </label>
-            <label>
+            <label class="flex gap-5 items-center">
               <input type="radio" name="answer" value="disagree" v-model="selectedAnswer" />
               Disagree
             </label>
-            <label>
+            <label class="flex gap-5 items-center">
               <input type="radio" name="answer" value="neutral" v-model="selectedAnswer" />
               Neutral
             </label>
-            <label>
+            <label class="flex gap-5 items-center">
               <input type="radio" name="answer" value="agree" v-model="selectedAnswer" />
               Agree
             </label>
-            <label>
+            <label class="flex gap-5 items-center">
               <input type="radio" name="answer" value="strongly_agree" v-model="selectedAnswer" />
               Strongly agree
             </label>
           </div>
-        </Card>
+        </div>
         <div class="flex justify-between">
-          <Button variant="outline">Back</Button>
-          <Button :disabled="!selectedAnswer" @click="nextQuestion">{{ currentQuestionIndex + 1 === survey.questions?.length ? 'Submit' : 'Next' }}</Button>
+          <Button :disabled="currentQuestionIndex === 0" variant="outline" @click="prevQuestion">Back</Button>
+          <Button :disabled="!selectedAnswer" @click="nextQuestion">{{ currentQuestionIndex + 1 ===
+            survey.questions?.length
+            ? 'Submit' : 'Next' }}</Button>
         </div>
       </div>
       <div v-else>
