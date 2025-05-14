@@ -22,9 +22,6 @@ import com.slwokoeck.backend.survey.dto.SurveyResultDto;
 import com.slwokoeck.backend.survey.model.Survey;
 import com.slwokoeck.backend.survey.service.SurveyResultService;
 import com.slwokoeck.backend.survey.service.SurveyService;
-import com.slwokoeck.backend.question.dto.QuestionDto;
-import com.slwokoeck.backend.question.model.Question;
-import com.slwokoeck.backend.question.service.QuestionService;
 
 import jakarta.validation.Valid;
 
@@ -32,14 +29,15 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/surveys")
 public class SurveyController {
 
-    @Autowired
-    private SurveyService surveyService;
+    private final SurveyService surveyService;
+
+    private final SurveyResultService surveyResultService;
 
     @Autowired
-    private SurveyResultService surveyResultService;
-
-    @Autowired
-    private QuestionService questionService;
+    public SurveyController(SurveyService surveyService, SurveyResultService surveyResultService) {
+        this.surveyService = surveyService;
+        this.surveyResultService = surveyResultService;
+    }
 
     @GetMapping("/{surveyId}/participants")
     public ResponseEntity<Long> getNumberOfParticipants(@PathVariable UUID surveyId) {
@@ -75,37 +73,14 @@ public class SurveyController {
 
     @PostMapping
     public ResponseEntity<Survey> createSurvey(@RequestBody SurveyDto surveyDto) {
-        Survey survey = new Survey();
-        survey.setId(UUID.randomUUID());
-        survey.setTitle(surveyDto.getTitle());
-        survey.setCreatedAt(surveyDto.getCreatedAt());
-        survey.setIsTemplate(surveyDto.isTemplate());
-        Survey createdSurvey = surveyService.createSurvey(survey);
-
-        // Create questions for the survey
-        if (surveyDto.getQuestions() != null) {
-            for (QuestionDto questionDto : surveyDto.getQuestions()) {
-                Question question = new Question();
-                question.setId(UUID.randomUUID());
-                question.setSurvey(createdSurvey);
-                question.setText(questionDto.getText());
-                question.setPosition(questionDto.getPosition());
-                questionService.createQuestion(question);
-            }
-        }
-
+        Survey createdSurvey = surveyService.createSurvey(surveyDto);
         return new ResponseEntity<>(createdSurvey, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Survey> updateSurvey(@PathVariable UUID id, @Valid @RequestBody SurveyDto surveyDto) {
         try {
-            Survey survey = new Survey();
-            survey.setId(UUID.randomUUID());
-            survey.setTitle(surveyDto.getTitle());
-            survey.setCreatedAt(surveyDto.getCreatedAt());
-            survey.setIsTemplate(surveyDto.isTemplate());
-            Survey updatedSurvey = surveyService.updateSurvey(id, survey);
+            Survey updatedSurvey = surveyService.updateSurvey(id, surveyDto);
             return new ResponseEntity<>(updatedSurvey, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey not found", e);

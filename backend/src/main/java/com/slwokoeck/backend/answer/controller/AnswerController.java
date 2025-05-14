@@ -20,9 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.slwokoeck.backend.answer.dto.AnswerDto;
 import com.slwokoeck.backend.answer.model.Answer;
 import com.slwokoeck.backend.answer.service.AnswerService;
-import com.slwokoeck.backend.question.model.Question;
-import com.slwokoeck.backend.question.service.QuestionService;
-import com.slwokoeck.backend.response.model.Response;
 
 import jakarta.validation.Valid;
 
@@ -30,11 +27,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/answers")
 public class AnswerController {
 
-    @Autowired
-    private AnswerService answerService;
+    private final AnswerService answerService;
 
     @Autowired
-    private QuestionService questionService;
+    public AnswerController(AnswerService answerService) {
+        this.answerService = answerService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Answer> getAnswerById(@PathVariable UUID id) {
@@ -54,17 +52,8 @@ public class AnswerController {
 
     @PostMapping
     public ResponseEntity<Answer> createAnswer(@Valid @RequestBody AnswerDto answerDto) {
-        Answer answer = new Answer();
-        answer.setId(UUID.randomUUID());
-        Response response = new Response();
-        response.setId(answerDto.getResponseId());
-        answer.setResponse(response);
-        Question question = questionService.getQuestionById(answerDto.getQuestionId());
-        answer.setQuestion(question);
-        answer.setRating(answerDto.getRating());
-        answer.setTextAnswer(answerDto.getTextAnswer());
         try {
-            Answer createdAnswer = answerService.createAnswer(answer);
+            Answer createdAnswer = answerService.createAnswer(answerDto);
             return new ResponseEntity<>(createdAnswer, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Answer not found", e);
@@ -73,17 +62,8 @@ public class AnswerController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Answer> updateAnswer(@PathVariable UUID id, @Valid @RequestBody AnswerDto answerDto) {
-        Answer answer = new Answer();
-        answer.setId(UUID.randomUUID());
-        Response response = new Response();
-        response.setId(answerDto.getResponseId());
-        answer.setResponse(response);
-        Question question = questionService.getQuestionById(answerDto.getQuestionId());
-        answer.setQuestion(question);
-        answer.setRating(answerDto.getRating());
-        answer.setTextAnswer(answerDto.getTextAnswer());
         try {
-            Answer updatedAnswer = answerService.updateAnswer(id, answer);
+            Answer updatedAnswer = answerService.updateAnswer(id, answerDto);
             if (updatedAnswer != null) {
                 return new ResponseEntity<>(updatedAnswer, HttpStatus.OK);
             } else {

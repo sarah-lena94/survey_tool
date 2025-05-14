@@ -20,8 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.slwokoeck.backend.response.dto.ResponseDto;
 import com.slwokoeck.backend.response.model.Response;
 import com.slwokoeck.backend.response.service.ResponseService;
-import com.slwokoeck.backend.survey.model.Survey;
-import com.slwokoeck.backend.survey.service.SurveyService;
 
 import jakarta.validation.Valid;
 
@@ -29,11 +27,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/responses")
 public class ResponseController {
 
-    @Autowired
-    private ResponseService responseService;
+    private final ResponseService responseService;
 
     @Autowired
-    private SurveyService surveyService;
+    public ResponseController(ResponseService responseService) {
+        this.responseService = responseService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> getResponseById(@PathVariable UUID id) {
@@ -53,13 +52,8 @@ public class ResponseController {
 
     @PostMapping
     public ResponseEntity<Response> createResponse(@Valid @RequestBody ResponseDto responseDto) {
-        Response response = new Response();
-        response.setId(UUID.randomUUID());
-        Survey survey = surveyService.getSurveyById(responseDto.getSurveyId());
-        response.setSurvey(survey);
-        response.setSubmittedAt(responseDto.getSubmittedAt());
         try {
-            Response createdResponse = responseService.createResponse(response);
+            Response createdResponse = responseService.createResponse(responseDto);
             return new ResponseEntity<>(createdResponse, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Response not found", e);
@@ -68,12 +62,8 @@ public class ResponseController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Response> updateResponse(@PathVariable UUID id, @Valid @RequestBody ResponseDto responseDto) {
-        Response response = new Response();
-        Survey survey = surveyService.getSurveyById(responseDto.getSurveyId());
-        response.setSurvey(survey);
-        response.setSubmittedAt(responseDto.getSubmittedAt());
         try {
-            Response updatedResponse = responseService.updateResponse(id, response);
+            Response updatedResponse = responseService.updateResponse(id, responseDto);
             if (updatedResponse != null) {
                 return new ResponseEntity<>(updatedResponse, HttpStatus.OK);
             } else {

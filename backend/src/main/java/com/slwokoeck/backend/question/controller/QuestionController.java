@@ -20,8 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.slwokoeck.backend.question.dto.QuestionDto;
 import com.slwokoeck.backend.question.model.Question;
 import com.slwokoeck.backend.question.service.QuestionService;
-import com.slwokoeck.backend.survey.model.Survey;
-import com.slwokoeck.backend.survey.service.SurveyService;
 
 import jakarta.validation.Valid;
 
@@ -29,11 +27,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/questions")
 public class QuestionController {
 
-    @Autowired
-    private QuestionService questionService;
+    private final QuestionService questionService;
 
     @Autowired
-    private SurveyService surveyService;
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable UUID id) {
@@ -53,17 +52,8 @@ public class QuestionController {
 
     @PostMapping
     public ResponseEntity<Question> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
-        Question question = new Question();
-        question.setId(UUID.randomUUID());
-        Survey survey = surveyService.getSurveyById(questionDto.getSurveyId());
-        if (survey == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey not found", null);
-        }
-        question.setSurvey(survey);
-        question.setText(questionDto.getText());
-        question.setPosition(questionDto.getPosition());
         try{
-        Question createdQuestion = questionService.createQuestion(question);
+        Question createdQuestion = questionService.createQuestion(questionDto);
         return new ResponseEntity<>(createdQuestion, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Question not found", e);
@@ -72,16 +62,8 @@ public class QuestionController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Question> updateQuestion(@PathVariable UUID id, @Valid @RequestBody QuestionDto questionDto) {
-        Question question = new Question();
-        Survey survey = surveyService.getSurveyById(questionDto.getSurveyId());
-        if (survey == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Survey not found", null);
-        }
-        question.setSurvey(survey);
-        question.setText(questionDto.getText());
-        question.setPosition(questionDto.getPosition());
         try{
-        Question updatedQuestion = questionService.updateQuestion(id, question);
+        Question updatedQuestion = questionService.updateQuestion(id, questionDto);
         if (updatedQuestion != null) {
             return new ResponseEntity<>(updatedQuestion, HttpStatus.OK);
         } else {
