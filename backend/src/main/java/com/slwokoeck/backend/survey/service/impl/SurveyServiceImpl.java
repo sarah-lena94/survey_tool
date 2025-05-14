@@ -9,10 +9,17 @@ import org.springframework.stereotype.Service;
 
 import com.slwokoeck.backend.survey.model.Survey;
 import com.slwokoeck.backend.survey.repository.SurveyRepository;
+import com.slwokoeck.backend.response.repository.ResponseRepository;
 import com.slwokoeck.backend.survey.service.SurveyService;
-
 @Service
 public class SurveyServiceImpl implements SurveyService {
+
+    private final ResponseRepository responseRepository;
+
+    public SurveyServiceImpl(ResponseRepository responseRepository) {
+        this.responseRepository = responseRepository;
+    }
+
 
     @Autowired
     private SurveyRepository surveyRepository;
@@ -40,5 +47,10 @@ public class SurveyServiceImpl implements SurveyService {
     @Override
     public void deleteSurvey(UUID id) {
         surveyRepository.deleteById(id);
+    }
+
+    @Override
+    public Long getNumberOfParticipants(UUID surveyId) {
+        return responseRepository.countBySurveyId(surveyId);
     }
 }

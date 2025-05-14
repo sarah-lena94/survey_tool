@@ -28,5 +28,9 @@ export const surveyService = {
   async getSurveyResults(surveyId: string): Promise<SurveyResultDto[]> {
     const response = await apiClient.get<SurveyResultDto[]>(`/surveys/${surveyId}/results`)
     return response.data
+  },
+  async getNumberOfParticipants(surveyId: string): Promise<number> {
+    const response = await apiClient.get<number>(`/surveys/${surveyId}/participants`)
+    return response.data
   }
 }

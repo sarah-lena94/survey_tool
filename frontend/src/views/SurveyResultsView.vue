@@ -47,12 +47,12 @@ onMounted(async () => {
         <div class="flex flex-col items-center">
           <h1
             class="text-3xl font-bold tracking-tighter bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-            Survey Results: {{ survey.title }}
+            Team Collaboration Survey Results
           </h1>
-          <p class="text-gray-600">Here are the results of the survey</p>
+          <p class="text-gray-600">Here are the results of your survey</p>
         </div>
 
-        <Results v-if="true" :surveyResults="surveyResults" />
+        <Results v-if="true" :surveyResults="surveyResults" :surveyId="surveyId" :surveyTitle="survey.title" />
       </div>
       <div v-else>
         Loading survey results...

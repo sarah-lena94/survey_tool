@@ -41,6 +41,12 @@ public class SurveyController {
     @Autowired
     private QuestionService questionService;
 
+    @GetMapping("/{surveyId}/participants")
+    public ResponseEntity<Long> getNumberOfParticipants(@PathVariable UUID surveyId) {
+        Long numberOfParticipants = surveyService.getNumberOfParticipants(surveyId);
+        return ResponseEntity.ok(numberOfParticipants);
+    }
+
     @GetMapping("/{surveyId}/results")
     public ResponseEntity<List<SurveyResultDto>> getSurveyResults(@PathVariable UUID surveyId) {
         List<SurveyResultDto> results = surveyResultService.calculateSurveyResults(surveyId);

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { useSurveyStore } from '../stores/surveyStore';
 import { useRoute, useRouter } from 'vue-router';
 import { answerService } from '../api/services/answerService';
 import { responseService } from '../api/services/responseService';
@@ -23,12 +24,16 @@ const survey = ref<Survey | null>(null);
 const currentQuestionIndex = ref(0);
 const currentQuestion = ref<Question | null>(null);
 const router = useRouter();
+const surveyStore = useSurveyStore();
 
 onMounted(async () => {
   try {
     survey.value = await surveyService.getById(surveyId.value);
-    if (survey.value && survey.value.questions && survey.value.questions.length > 0) {
-      currentQuestion.value = survey.value.questions[currentQuestionIndex.value];
+    if (survey.value) {
+      surveyStore.setCurrentSurveyTitle(survey.value.title);
+      if (survey.value.questions && survey.value.questions.length > 0) {
+        currentQuestion.value = survey.value.questions[currentQuestionIndex.value];
+      }
     }
   } catch (error) {
     console.error('Failed to fetch survey:', error);

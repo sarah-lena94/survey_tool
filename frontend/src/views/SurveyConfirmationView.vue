@@ -3,15 +3,19 @@ import Results from '../components/ui/Results.vue';
 import MainLayout from '../components/layout/MainLayout.vue';
 import Header from '../components/layout/Header.vue';
 import Footer from '../components/layout/Footer.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 import { surveyService } from '../api/services/surveyService';
 import type { SurveyResultDto } from '../types/survey.ts';
+import { useSurveyStore } from '../stores/surveyStore';
+import { storeToRefs } from 'pinia';
 
 const showResults = ref(false);
 const route = useRoute();
 const surveyId = ref<string | null>(null);
 const surveyResults = ref<SurveyResultDto[]>([]);
+const surveyStore = useSurveyStore();
+const { currentSurveyTitle: surveyTitle } = storeToRefs(surveyStore);
 
 onMounted(async () => {
   surveyId.value = route.params.id as string;
@@ -47,7 +51,7 @@ onMounted(async () => {
           View aggregated results
         </button>
       </div>
-      <Results v-if="showResults" :surveyResults="surveyResults" />
+      <Results v-if="showResults" :surveyResults="surveyResults" :surveyId="surveyId || ''" :surveyTitle="surveyTitle || ''" />
       <RouterLink to="/">
         <button
           class="mt-4 bg-purple-600 text-white rounded-full px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors">Return

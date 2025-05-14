@@ -12,4 +12,5 @@ public interface SurveyService {
     Survey createSurvey(Survey survey);
     Survey updateSurvey(UUID id, Survey survey);
     void deleteSurvey(UUID id);
+    Long getNumberOfParticipants(UUID surveyId);
 }
