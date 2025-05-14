@@ -50,7 +50,6 @@ const addQuestion = () => {
 const removeQuestion = (index: number) => {
   if (questions.value.length > 1) {
     questions.value.splice(index, 1);
-    // Update the position of the remaining questions
     questions.value.forEach((question, i) => {
       question.value.position = i;
     });
@@ -60,16 +59,11 @@ const removeQuestion = (index: number) => {
 const createSurvey = async () => {
   try {
     await nextTick();
-    // Log the title value to verify it's not empty
-    console.log('Survey title:', title.value);
-    console.log('Questions array:', questions.value);
-
     const surveyData: SurveyDto = {
       title: title.value,
       createdAt: new Date().toISOString(),
       isTemplate: false,
       questions: questions.value.map((q, index) => {
-        console.log('Question text:', q.value.text);
         return {
           id: '',
           surveyId: '',
@@ -80,22 +74,13 @@ const createSurvey = async () => {
       }),
     };
 
-    // Log the complete survey data being sent
-    console.log('Survey data being sent:', surveyData);
-
     const createdSurvey = await surveyService.create(surveyData);
 
-    // Hier sollte die Logik zum Senden der Fragen an das Backend stehen
-    // Angenommen, die Fragen werden separat über eine andere API hinzugefügt
-    console.log('Survey created successfully:', createdSurvey);
-
-    // Redirect to the success page instead of showing an alert
     router.push({
       name: 'survey-creation-success',
       params: { id: createdSurvey.id }
     });
   } catch (error) {
-    console.error('Error creating survey:', error);
     alert('Failed to create survey.');
   }
 };

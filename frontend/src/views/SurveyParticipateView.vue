@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
+import { surveyService } from '../api/services/surveyService';
 import MainLayout from '../components/layout/MainLayout.vue';
 import Button from '../components/ui/Button.vue';
-import Card from '../components/ui/Card.vue';
 import Input from '../components/ui/Input.vue';
-import { surveyService } from '../api/services/surveyService';
 
 const surveyCode = ref('');
 const router = useRouter();

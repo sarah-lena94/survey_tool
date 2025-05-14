@@ -16,7 +16,6 @@ const surveyResults = ref<SurveyResultDto[]>([]);
 onMounted(async () => {
   try {
     survey.value = await surveyService.getById(surveyId.value);
-    console.log(surveyId.value);
     surveyResults.value = await surveyService.getSurveyResults(surveyId.value);
   } catch (error) {
     console.error('Failed to fetch survey:', error);
@@ -47,7 +46,7 @@ onMounted(async () => {
         <div class="flex flex-col items-center">
           <h1
             class="text-3xl font-bold tracking-tighter bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-            Team Collaboration Survey Results
+            View Your Survey Results
           </h1>
           <p class="text-gray-600">Here are the results of your survey</p>
         </div>

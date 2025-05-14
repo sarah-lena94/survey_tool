@@ -14,7 +14,6 @@ const copySuccess = ref<boolean>(false);
 
 onMounted(() => {
   surveyId.value = route.params.id as string;
-  // Construct the survey link - this would be the actual link to the survey
   surveyLink.value = `${window.location.origin}/survey/${surveyId.value}`;
 });
 

@@ -42,21 +42,17 @@ onMounted(async () => {
 
 const submitSurvey = async () => {
   try {
-    // Save the last answer
     if (currentQuestion.value && selectedAnswer.value) {
       answers.value.set(currentQuestion.value.id, selectedAnswer.value);
     }
 
-    // Create a response
     const responseDto: ResponseDto = {
       surveyId: surveyId.value,
       submittedAt: new Date().toISOString()
     };
 
     const response = await responseService.create(responseDto);
-    console.log('Response created:', response);
 
-    // Create answers for each question
     const savePromises = Array.from(answers.value.entries()).map(async ([questionId, answer]) => {
       const answerDto: AnswerDto = {
         responseId: response.id,
@@ -69,11 +65,9 @@ const submitSurvey = async () => {
     });
 
     await Promise.all(savePromises);
-    console.log('All answers saved successfully!');
 
     router.push(`/survey/${surveyId.value}/confirmation`);
   } catch (error) {
-    console.error('Failed to submit survey:', error);
     alert('Failed to submit survey. Please try again.');
   }
 };
@@ -90,7 +84,6 @@ const getNumericRating = (answer: string): number => {
 };
 
 const nextQuestion = () => {
-  // Save the current answer before moving to the next question
   if (currentQuestion.value && selectedAnswer.value) {
     answers.value.set(currentQuestion.value.id, selectedAnswer.value);
   }
@@ -100,7 +93,6 @@ const nextQuestion = () => {
     currentQuestionIndex.value++;
     currentQuestion.value = survey.value.questions[currentQuestionIndex.value];
 
-    // If we already have an answer for this question, restore it
     if (currentQuestion.value && answers.value.has(currentQuestion.value.id)) {
       selectedAnswer.value = answers.value.get(currentQuestion.value.id) || '';
     }
@@ -110,17 +102,14 @@ const nextQuestion = () => {
 };
 
 const prevQuestion = () => {
-  // Save the current answer before moving to the next question
   if (currentQuestion.value && selectedAnswer.value) {
     answers.value.set(currentQuestion.value.id, selectedAnswer.value);
   }
-
 
   if (survey.value && survey.value.questions && currentQuestionIndex.value > 0) {
     currentQuestionIndex.value -= 1;
     currentQuestion.value = survey.value.questions[currentQuestionIndex.value];
 
-    // If we already have an answer for this question, restore it
     if (currentQuestion.value && answers.value.has(currentQuestion.value.id)) {
       selectedAnswer.value = answers.value.get(currentQuestion.value.id) || '';
     }
