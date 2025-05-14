@@ -1,19 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import MainLayout from '../components/layout/MainLayout.vue';
 import Button from '../components/ui/Button.vue';
 import Card from '../components/ui/Card.vue';
 import Input from '../components/ui/Input.vue';
+import { surveyService } from '../api/services/surveyService';
 
 const surveyCode = ref('');
 const router = useRouter();
+
+import type { Survey } from 'src/types/survey.ts';
+
+const survey1 = ref<Survey | null>(null);
+const survey2 = ref<Survey | null>(null);
+const survey3 = ref<Survey | null>(null);
+
+onMounted(async () => {
+  survey1.value = await surveyService.getById('cf3cad35-5810-42a3-b10e-ec7b16e41fe4') || null;
+  survey2.value = await surveyService.getById('4c7f2a5a-6b7c-4d7e-bc25-9b7e0e1e6d2a') || null;
+  survey3.value = await surveyService.getById('7b9e0e1e-6d2a-4c7f-2a5a-6b7c4d7ebc25') || null;
+});
 
 const startSurvey = () => {
   if (surveyCode.value) {
     router.push(`/survey/${surveyCode.value}`);
   } else {
-    // Optionally, display an error message if the survey code is empty
     alert('Please enter a survey code.');
   }
 };
@@ -81,18 +93,17 @@ const startSurvey = () => {
 
               <div class="bg-white p-5">
                 <div class="space-y-5">
-                  <!-- Team Collaboration Survey -->
-                  <RouterLink to="/survey/team-collaboration" class="block">
+                  <RouterLink v-if="survey1" :to="'/survey/' + survey1.id" class="block">
                     <div class="bg-white rounded-lg border border-gray-100 hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer">
                       <div class="p-5">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Team Collaboration Survey</h3>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ survey1.title }}</h3>
                         <div class="flex items-center text-sm text-gray-500">
                           <div class="flex items-center mr-4">
                             <svg class="w-4 h-4 mr-1.5 text-purple-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <rect width="18" height="18" x="3" y="3" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                               <path d="M7 9h10M7 13h10M7 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                             </svg>
-                            <span>5 questions</span>
+                            <span>{{ survey1.questions?.length }} questions</span>
                           </div>
                           <div class="flex items-center">
                             <svg class="w-4 h-4 mr-1.5 text-teal-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,25 +114,24 @@ const startSurvey = () => {
                               <circle cx="12" cy="14" r="1" fill="currentColor" />
                               <circle cx="16" cy="14" r="1" fill="currentColor" />
                             </svg>
-                            <span>10.5.2023</span>
+                            <span>{{ new Date(survey1.createdAt || '').toLocaleDateString() }}</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </RouterLink>
 
-                  <!-- Project Feedback Survey -->
-                  <RouterLink to="/survey/project-feedback" class="block">
+                  <RouterLink v-if="survey2" :to="'/survey/' + survey2.id" class="block">
                     <div class="bg-white rounded-lg border border-gray-100 hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer">
                       <div class="p-5">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Project Feedback Survey</h3>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ survey2.title }}</h3>
                         <div class="flex items-center text-sm text-gray-500">
                           <div class="flex items-center mr-4">
                             <svg class="w-4 h-4 mr-1.5 text-purple-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <rect width="18" height="18" x="3" y="3" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                               <path d="M7 9h10M7 13h10M7 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                             </svg>
-                            <span>8 questions</span>
+                            <span>{{ survey2.questions?.length }} questions</span>
                           </div>
                           <div class="flex items-center">
                             <svg class="w-4 h-4 mr-1.5 text-teal-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -132,25 +142,24 @@ const startSurvey = () => {
                               <circle cx="12" cy="14" r="1" fill="currentColor" />
                               <circle cx="16" cy="14" r="1" fill="currentColor" />
                             </svg>
-                            <span>8.5.2023</span>
+                            <span>{{ new Date(survey2.createdAt || '').toLocaleDateString() }}</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </RouterLink>
 
-                  <!-- Work Environment Survey -->
-                  <RouterLink to="/survey/work-environment" class="block">
+                  <RouterLink v-if="survey3" :to="'/survey/' + survey3.id" class="block">
                     <div class="bg-white rounded-lg border border-gray-100 hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer">
                       <div class="p-5">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Work Environment Survey</h3>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ survey3.title }}</h3>
                         <div class="flex items-center text-sm text-gray-500">
                           <div class="flex items-center mr-4">
                             <svg class="w-4 h-4 mr-1.5 text-purple-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <rect width="18" height="18" x="3" y="3" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                               <path d="M7 9h10M7 13h10M7 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                             </svg>
-                            <span>6 questions</span>
+                            <span>{{ survey3.questions?.length }} questions</span>
                           </div>
                           <div class="flex items-center">
                             <svg class="w-4 h-4 mr-1.5 text-teal-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -161,7 +170,7 @@ const startSurvey = () => {
                               <circle cx="12" cy="14" r="1" fill="currentColor" />
                               <circle cx="16" cy="14" r="1" fill="currentColor" />
                             </svg>
-                            <span>5.5.2023</span>
+                            <span>{{ new Date(survey3.createdAt || '').toLocaleDateString() }}</span>
                           </div>
                         </div>
                       </div>

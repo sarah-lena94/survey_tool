@@ -178,3 +178,307 @@ databaseChangeLog:
               - column:
                   name: text_answer
                   type: VARCHAR(255)
+
+  - changeSet:
+      id: 7
+      author: slwokoeck
+      changes:
+        - insert:
+            tableName: survey
+            columns:
+                - column:
+                    name: id
+                    value: cf3cad35-5810-42a3-b10e-ec7b16e41fe4
+                - column:
+                    name: title
+                    value: "Workplace Satisfaction"
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: 67497559-d182-4053-9057-2c7b20c0270b
+                - column:
+                    name: text
+                    value: "I feel valued for the work I do in my organization."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: cf3cad35-5810-42a3-b10e-ec7b16e41fe4
+                - column:
+                    name: position
+                    valueNumeric: 1
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: a39ef899-fd58-4646-8117-804b9c7cf22c
+                - column:
+                    name: text
+                    value: "Communication within my team is effective."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: cf3cad35-5810-42a3-b10e-ec7b16e41fe4
+                - column:
+                    name: position
+                    valueNumeric: 2
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: 8ea8539d-e9f5-4aae-a6b1-1f24643d01c9
+                - column:
+                    name: text
+                    value: "I have the resources I need to do my job well."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: cf3cad35-5810-42a3-b10e-ec7b16e41fe4
+                - column:
+                    name: position
+                    valueNumeric: 3
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: 23622934-d5c0-47dd-9866-130ed4cda30d
+                - column:
+                    name: text
+                    value: "My work gives me a sense of personal accomplishment."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: cf3cad35-5810-42a3-b10e-ec7b16e41fe4
+                - column:
+                    name: position
+                    valueNumeric: 4
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: c4ea97c7-0af5-4ee9-b4da-78b6941cd3dd
+                - column:
+                    name: text
+                    value: "I receive constructive feedback from my supervisor."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: cf3cad35-5810-42a3-b10e-ec7b16e41fe4
+                - column:
+                    name: position
+                    valueNumeric: 5
+
+        - insert:
+            tableName: survey
+            columns:
+                - column:
+                    name: id
+                    value: 4c7f2a5a-6b7c-4d7e-bc25-9b7e0e1e6d2a
+                - column:
+                    name: title
+                    value: "Online Learning Experience"
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: 1c3c8d1f-7e2b-4b7f-8a2e-1d3f4e5c6b7a
+                - column:
+                    name: text
+                    value: "The online learning platform is easy to navigate."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: 4c7f2a5a-6b7c-4d7e-bc25-9b7e0e1e6d2a
+                - column:
+                    name: position
+                    valueNumeric: 1
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: 2d4e6f8a-1b3c-4d5e-9a7b-2c4e6f8a1b3c
+                - column:
+                    name: text
+                    value: "Course materials are clear and well-organized."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: 4c7f2a5a-6b7c-4d7e-bc25-9b7e0e1e6d2a
+                - column:
+                    name: position
+                    valueNumeric: 2
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: 3e5f7a9b-2c4e-6f8a-1b3c-4d5e9a7b2c4e
+                - column:
+                    name: text
+                    value: "I feel engaged during online classes."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: 4c7f2a5a-6b7c-4d7e-bc25-9b7e0e1e6d2a
+                - column:
+                    name: position
+                    valueNumeric: 3
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: 4f8a1b3c-2d4e-6f8a-1b3c-4d5e9a7b2c4e
+                - column:
+                    name: text
+                    value: "Technical support is readily available when I need it."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: 4c7f2a5a-6b7c-4d7e-bc25-9b7e0e1e6d2a
+                - column:
+                    name: position
+                    valueNumeric: 4
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: 5a7b2c4e-6f8a-1b3c-4d5e-9a7b2c4e6f8a
+                - column:
+                    name: text
+                    value: "I am satisfied with the level of interaction with instructors."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: 4c7f2a5a-6b7c-4d7e-bc25-9b7e0e1e6d2a
+                - column:
+                    name: position
+                    valueNumeric: 5
+
+        - insert:
+            tableName: survey
+            columns:
+                - column:
+                    name: id
+                    value: 7b9e0e1e-6d2a-4c7f-2a5a-6b7c4d7ebc25
+                - column:
+                    name: title
+                    value: "Community Involvement"
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: 8a1b3c4d-5e9a-7b2c-4e6f-8a1b3c4d5e9a
+                - column:
+                    name: text
+                    value: "I am aware of community events and activities in my area."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: 7b9e0e1e-6d2a-4c7f-2a5a-6b7c4d7ebc25
+                - column:
+                    name: position
+                    valueNumeric: 1
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: 9b2c4e6f-8a1b-3c4d-5e9a-7b2c4e6f8a1b
+                - column:
+                    name: text
+                    value: "I feel encouraged to participate in local initiatives."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: 7b9e0e1e-6d2a-4c7f-2a5a-6b7c4d7ebc25
+                - column:
+                    name: position
+                    valueNumeric: 2
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: a1b3c4d5-e9a7-b2c4-e6f8-a1b3c4d5e9a7
+                - column:
+                    name: text
+                    value: "My community provides opportunities for volunteering."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: 7b9e0e1e-6d2a-4c7f-2a5a-6b7c4d7ebc25
+                - column:
+                    name: position
+                    valueNumeric: 3
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: b2c4e6f8-a1b3-c4d5-e9a7-b2c4e6f8a1b3
+                - column:
+                    name: text
+                    value: "I believe my input is           valued in community decisions."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: 7b9e0e1e-6d2a-4c7f-2a5a-6b7c4d7ebc25
+                - column:
+                    name: position
+                    valueNumeric: 4
+        - insert:
+            tableName: question
+            columns:
+                - column:
+                    name: id
+                    value: c4d5e9a7-b2c4-e6f8-a1b3-c4d5e9a7b2c4
+                - column:
+                    name: text
+                    value: "I feel a strong sense of belonging in my community."
+                - column:
+                    name: scale
+                    value: "Likert"
+                - column:
+                    name: survey_id
+                    value: 7b9e0e1e-6d2a-4c7f-2a5a-6b7c4d7ebc25
+                - column:
+                    name: position
+                    valueNumeric: 5
