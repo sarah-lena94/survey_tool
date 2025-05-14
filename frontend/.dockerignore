@@ -1,0 +1,10 @@
+node_modules
+dist
+cypress/
+cypress.config.js
+cypress.config.ts
+.vscode
+.env
+.git
+.gitignore
+npm-debug.log
