@@ -1,15 +1,23 @@
 <template>
-  <!-- <div class="flex flex-col min-h-screen w-full"> -->
-    <header>
+  <div class="flex flex-col items-center min-h-screen w-full">
+    <header class="w-full">
       <slot name="header" />
     </header>
-    <main class="">
-      <!-- <div class=""> -->
-        <slot />
-      <!-- </div> -->
+    <main class="flex-1 py-6 w-full">
+      <slot />
     </main>
-    <footer>
+    <footer class="w-full">
       <slot name="footer" />
     </footer>
-  <!-- </div> -->
+  </div>
 </template>
+
+<style scoped>
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+</style>

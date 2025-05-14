@@ -34,11 +34,10 @@ import Button from '../ui/Button.vue'
         <div class="hidden md:flex items-center space-x-8">
           <RouterLink to="/" class="text-sm font-medium hover:text-teal-600 transition-colors">Home</RouterLink>
           <RouterLink to="/create" class="text-sm font-medium hover:text-teal-600 transition-colors">Create Survey</RouterLink>
-          <RouterLink to="/about" class="text-sm font-medium hover:text-teal-600 transition-colors">About</RouterLink>
+          <RouterLink to="" class="text-sm font-medium hover:text-teal-600 transition-colors">About</RouterLink>
         </div>
 
         <div class="flex items-center gap-4">
-          <RouterLink to="/signin" class="text-sm font-medium border border-gray-200 rounded-md px-4 py-1.5 hover:border-teal-500 hover:text-teal-600 transition-colors">Sign In</RouterLink>
           <RouterLink to="/get-started">
             <Button size="sm" class="bg-teal-500 hover:bg-teal-600 text-white rounded-md px-4 py-1.5">Get Started</Button>
           </RouterLink>

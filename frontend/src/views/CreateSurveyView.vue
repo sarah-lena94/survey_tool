@@ -114,7 +114,7 @@ const createSurvey = async () => {
             <h2 class="text-teal-800 font-bold">Survey Details</h2>
             <p class="text-gray-600">Enter the title and description for your survey</p>
           </div>
-          <div class="p-6">
+          <div class="py-6">
             <div class="space-y-4">
               <div class="space-y-2">
                 <Label for="title">Survey Title</Label>
@@ -129,7 +129,7 @@ const createSurvey = async () => {
             <h2 class="text-purple-800 font-bold">Survey Questions</h2>
             <p class="text-gray-600">Add up to 10 questions for your survey</p>
           </div>
-          <div class="p-6">
+          <div class="py-6">
             <div class="space-y-6">
               <div v-for="(question, index) in questions" :key="index" class="space-y-4 p-6 border rounded-2xl relative bg-gradient-to-r from-white to-purple-50/30 border-purple-100 hover:border-purple-200 transition-all duration-300">
                 <div class="absolute top-4 right-4">
@@ -152,9 +152,9 @@ const createSurvey = async () => {
                   <Label :for="`scale-${index}`">Response Scale</Label>
                   <select :id="`scale-${index}`" v-model="question.value.scale" class="border-purple-200 focus:border-purple-400 focus:ring-purple-400 transition-all duration-300">
                     <option value="1-5">1-5 Scale</option>
-                    <option value="1-10">1-10 Scale</option>
-                    <option value="emoji">Emoji Scale</option>
-                    <option value="agreement">Agreement Scale</option>
+                    <option disabled value="1-10">1-10 Scale (coming soon)</option>
+                    <option disabled value="emoji">Emoji Scale (coming soon)</option>
+                    <option disabled value="agreement">Agreement Scale (coming soon)</option>
                   </select>
                 </div>
               </div>

@@ -13,11 +13,109 @@ a,
   padding: 3px;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+button:hover {
+  cursor: pointer;
 }
 
-@media (min-width: 1024px) {
+/* @media (hover: hover) { */
+  a:hover {
+    /* background-color: hsla(160, 100%, 37%, 0.2); */
+    cursor: pointer;
+  }
+/* } */
+
+@media (min-width: 1024px) {}
+
+/* Survey specific styles */
+.survey-card {
+  transition: all 0.2s ease;
+  border-radius: 1rem;
+}
+
+.survey-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.survey-badge {
+  background-color: rgba(20, 184, 166, 0.1);
+  color: rgb(13, 148, 136);
+}
+
+.survey-list-item {
+  transition: all 0.2s ease;
+}
+
+.survey-list-item:hover {
+  transform: translateY(-1px);
+}
+
+/* Card background gradients */
+.bg-gradient-to-br.from-teal-50.to-teal-100 {
+  background: linear-gradient(135deg, rgba(240, 253, 250, 1) 0%, rgba(204, 251, 241, 1) 100%);
+}
+
+.bg-gradient-to-br.from-purple-50.to-purple-100 {
+  background: linear-gradient(135deg, rgba(250, 245, 255, 1) 0%, rgba(243, 232, 255, 1) 100%);
+}
+
+/* Improved focus styles */
+/* *:focus-visible {
+  outline: 2px solid rgba(20, 184, 166, 0.5);
+  outline-offset: 2px;
+} */
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Typography enhancements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.025em;
+}
+
+.text-teal-700 {
+  color: #0f766e;
+}
+
+.text-purple-700 {
+  color: #7e22ce;
+}
+
+/* Button enhancements */
+button {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Card enhancements */
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
